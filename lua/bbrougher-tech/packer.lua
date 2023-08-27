@@ -20,6 +20,7 @@ return require('packer').startup(function(use)
   use('mbbill/undotree')
   use('tpope/vim-fugitive')
   use('sbdchd/neoformat')
+  use("ojroques/vim-oscyank")
 
   use {
     'VonHeikemen/lsp-zero.nvim',
@@ -48,4 +49,10 @@ return require('packer').startup(function(use)
           }
       end,
   })
+
+  use {
+          "williamboman/mason.nvim"
+      }
+
+  require("mason").setup()
 end)

@@ -51,3 +51,7 @@ if vim.fn.has('wsl') == 1 then
     })
 end
 
+vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
+vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
+vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
+
