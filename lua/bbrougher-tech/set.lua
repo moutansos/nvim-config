@@ -55,3 +55,15 @@ vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
 vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
 vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
 
+vim.g.clipboard = {
+     name = 'WslClipboard',
+     copy = {
+        ["+"] = 'clip.exe',
+        ["*"] = 'clip.exe',
+      },
+     paste = {
+        ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+     },
+     cache_enabled = 0,
+   }
