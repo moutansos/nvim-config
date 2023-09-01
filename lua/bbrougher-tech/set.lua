@@ -35,35 +35,35 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "100"
 
 vim.g.mapleader = " "
 
 vim.wo.relativenumber = true
 
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 if vim.fn.has('wsl') == 1 then
-    vim.api.nvim_create_autocmd('TextYankPost', {
-        group = vim.api.nvim_create_augroup('Yank', { clear = true }),
-        callback = function()
-            vim.fn.system('clip.exe', vim.fn.getreg('"'))
-        end,
-    })
+--    vim.api.nvim_create_autocmd('TextYankPost', {
+--        group = vim.api.nvim_create_augroup('Yank', { clear = true }),
+--        callback = function()
+--            vim.fn.system('clip.exe', vim.fn.getreg('"'))
+--        end,
+--    })
+    vim.g.clipboard = { 
+        name = 'WslClipboard',
+        copy = {
+            ["+"] = 'clip.exe',
+            ["*"] = 'clip.exe',
+        },
+        paste = {
+            ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+            ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+        },
+        cache_enabled = 0,
+   }
 end
 
 vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
 vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
 vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
 
-vim.g.clipboard = {
-     name = 'WslClipboard',
-     copy = {
-        ["+"] = 'clip.exe',
-        ["*"] = 'clip.exe',
-      },
-     paste = {
-        ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-        ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-     },
-     cache_enabled = 0,
-   }
