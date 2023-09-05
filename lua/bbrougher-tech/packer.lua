@@ -21,6 +21,7 @@ return require('packer').startup(function(use)
   use('tpope/vim-fugitive')
   use('sbdchd/neoformat')
   use("ojroques/vim-oscyank")
+  use('preservim/nerdtree')
 
   use {
     'VonHeikemen/lsp-zero.nvim',
