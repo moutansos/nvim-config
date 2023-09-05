@@ -1,4 +1,3 @@
-vim.opt.guicursor = ""
 
 vim.opt.nu = true
 
@@ -49,6 +48,7 @@ if vim.fn.has('wsl') == 1 then
 --            vim.fn.system('clip.exe', vim.fn.getreg('"'))
 --        end,
 --    })
+    vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
     vim.g.clipboard = { 
         name = 'WslClipboard',
         copy = {
