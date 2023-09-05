@@ -1,6 +1,18 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>f", ":Neoformat<CR>")
+vim.keymap.set("n", "<leader>nf", ":NERDTreeFocus<CR>")
+vim.keymap.set("n", "<leader>nt", ":NERDTreeToggle<CR>")
+
+vim.keymap.set("n", "<leader>wvs", ":vertical-split<CR>")
+vim.keymap.set("n", "<leader>whs", ":horizontal-split<CR>")
+vim.keymap.set("n", "<leader>wc", ":close<CR>")
+vim.keymap.set("n", "<leader>wj", "<C-w>j")
+vim.keymap.set("n", "<leader>wk", "<C-w>k")
+vim.keymap.set("n", "<leader>wl", "<C-w>l")
+vim.keymap.set("n", "<leader>wh", "<C-w>h")
+
+
 vim.keymap.set("n", "C-[", "<esc>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
