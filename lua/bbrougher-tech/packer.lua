@@ -27,6 +27,11 @@ return require('packer').startup(function(use)
   use('Xuyuanp/nerdtree-git-plugin')
 
   use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
+
+  use {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v2.x',
     requires = {
