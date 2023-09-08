@@ -15,10 +15,11 @@ return require('packer').startup(function(use)
   use 'Mofiqul/vscode.nvim'
 
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+  use('nvim-treesitter/nvim-treesitter-context')
   use('nvim-treesitter/playground')
   use('theprimeagen/harpoon')
   use('mbbill/undotree')
-  use('tpope/vim-fugitive')
+  -- use('tpope/vim-fugitive')
   use('sbdchd/neoformat')
   use("ojroques/vim-oscyank")
  

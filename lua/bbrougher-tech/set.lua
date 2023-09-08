@@ -25,12 +25,12 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
   pattern = { "*" },
 })
 
-
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
+vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 
 vim.opt.updatetime = 50
 
@@ -42,13 +42,6 @@ vim.wo.relativenumber = true
 
 -- vim.opt.clipboard = "unnamedplus"
 if vim.fn.has('wsl') == 1 then
---    vim.api.nvim_create_autocmd('TextYankPost', {
---        group = vim.api.nvim_create_augroup('Yank', { clear = true }),
---        callback = function()
---            vim.fn.system('clip.exe', vim.fn.getreg('"'))
---        end,
---    })
-    vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
     vim.g.clipboard = { 
         name = 'WslClipboard',
         copy = {
