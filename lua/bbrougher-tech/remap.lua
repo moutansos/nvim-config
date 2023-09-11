@@ -12,6 +12,15 @@ vim.keymap.set("n", "<leader>wk", "<C-w>k")
 vim.keymap.set("n", "<leader>wl", "<C-w>l")
 vim.keymap.set("n", "<leader>wh", "<C-w>h")
 
+vim.keymap.set("n", "<m-1>", ":tabn1<CR>")
+vim.keymap.set("n", "<m-2>", ":tabn2<CR>")
+vim.keymap.set("n", "<m-3>", ":tabn3<CR>")
+vim.keymap.set("n", "<m-4>", ":tabn4<CR>")
+vim.keymap.set("n", "<m-5>", ":tabn5<CR>")
+vim.keymap.set("n", "<m-6>", ":tabn6<CR>")
+vim.keymap.set("n", "<m-7>", ":tabn7<CR>")
+vim.keymap.set("n", "<m-8>", ":tabn8<CR>")
+vim.keymap.set("n", "<m-9>", ":tabn9<CR>")
 
 vim.keymap.set("n", "C-[", "<esc>")
 
