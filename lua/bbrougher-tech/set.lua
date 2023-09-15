@@ -39,7 +39,7 @@ vim.g.mapleader = " "
 
 vim.wo.relativenumber = true
 
--- vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 if vim.fn.has('wsl') == 1 then
     vim.g.clipboard = { 
         name = 'WslClipboard',

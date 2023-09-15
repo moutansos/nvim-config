@@ -1,5 +1,6 @@
 local lsp = require("lsp-zero")
 
+
 lsp.preset("recommended")
 
 lsp.ensure_installed({
@@ -51,6 +52,10 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+local lspconfig = require('lspconfig')
+lspconfig.tsserver.setup {
+}
 
 lsp.setup()
 

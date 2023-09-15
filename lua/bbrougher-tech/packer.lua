@@ -19,13 +19,13 @@ return require('packer').startup(function(use)
   use('nvim-treesitter/playground')
   use('theprimeagen/harpoon')
   use('mbbill/undotree')
-  -- use('tpope/vim-fugitive')
   use('sbdchd/neoformat')
   use("ojroques/vim-oscyank")
  
   use('preservim/nerdtree')
   use('ryanoasis/vim-devicons')
   use('Xuyuanp/nerdtree-git-plugin')
+  use('github/copilot.vim')
 
   use {
       'nvim-lualine/lualine.nvim',
