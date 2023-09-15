@@ -3,6 +3,7 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>f", ":Neoformat<CR>")
 vim.keymap.set("n", "<leader>nf", ":NERDTreeFocus<CR>")
 vim.keymap.set("n", "<leader>nt", ":NERDTreeToggle<CR>")
+vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 
 vim.keymap.set("n", "<leader>wvs", ":vertical-split<CR>")
 vim.keymap.set("n", "<leader>whs", ":horizontal-split<CR>")
