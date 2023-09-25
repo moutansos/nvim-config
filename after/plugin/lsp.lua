@@ -1,6 +1,5 @@
 local lsp = require("lsp-zero")
 
-
 lsp.preset("recommended")
 
 lsp.ensure_installed({
@@ -31,10 +30,10 @@ lsp.setup_nvim_cmp({
 lsp.set_preferences({
     suggest_lsp_servers = false,
     sign_icons = {
-        error = 'E',
-        warn = 'W',
+        error = '',
+        warn = '',
         hint = 'H',
-        info = 'I'
+        info = ''
     }
 })
 
@@ -56,6 +55,32 @@ end)
 local lspconfig = require('lspconfig')
 lspconfig.tsserver.setup {
 }
+lspconfig.denols.setup({
+  root_dir = lspconfig.util.root_pattern("deno.json"),
+  init_options = {
+    lint = true,
+    unstable = true,
+    suggest = {
+      imports = {
+        hosts = {
+          ["https://deno.land"] = true,
+          ["https://cdn.nest.land"] = true,
+          ["https://crux.land"] = true,
+        },
+      },
+    },
+  },
+  on_attach = function()
+    local active_clients = vim.lsp.get_active_clients()
+    for _, client in pairs(active_clients) do
+      -- stop tsserver if denols is already active
+      if client.name == "tsserver" then
+        client.stop()
+      end
+    end
+  end,
+})
+
 
 lsp.setup()
 

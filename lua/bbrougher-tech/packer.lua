@@ -27,6 +27,17 @@ return require('packer').startup(function(use)
   use('Xuyuanp/nerdtree-git-plugin')
   use('github/copilot.vim')
 
+  use('mfussenegger/nvim-dap')
+  use('leoluz/nvim-dap-go')
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use('theHamsta/nvim-dap-virtual-text')
+  use('nvim-telescope/telescope-dap.nvim')
+
+  use({
+    "aserowy/tmux.nvim",
+    config = function() return require("tmux").setup() end
+  })
+
   use {
       'nvim-lualine/lualine.nvim',
       requires = { 'nvim-tree/nvim-web-devicons', opt = true }
