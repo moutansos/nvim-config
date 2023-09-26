@@ -39,7 +39,7 @@ vim.g.mapleader = " "
 
 vim.wo.relativenumber = true
 
-vim.opt.clipboard = "unnamedplus"
+-- vim.opt.clipboard = "unnamedplus"
 if vim.fn.has('wsl') == 1 then
     vim.g.clipboard = { 
         name = 'WslClipboard',
@@ -48,8 +48,8 @@ if vim.fn.has('wsl') == 1 then
             ["*"] = 'clip.exe',
         },
         paste = {
-            ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-            ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+            ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", [string]::Empty))',
+            ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", [string]::Empty))',
         },
         cache_enabled = 0,
    }

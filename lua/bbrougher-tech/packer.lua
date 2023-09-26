@@ -33,10 +33,10 @@ return require('packer').startup(function(use)
   use('theHamsta/nvim-dap-virtual-text')
   use('nvim-telescope/telescope-dap.nvim')
 
-  use({
-    "aserowy/tmux.nvim",
-    config = function() return require("tmux").setup() end
-  })
+  -- use({
+  --   "aserowy/tmux.nvim",
+  --   config = function() return require("tmux").setup() end
+  -- })
 
   use {
       'nvim-lualine/lualine.nvim',
