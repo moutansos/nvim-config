@@ -37,6 +37,14 @@ return require('packer').startup(function(use)
   --   "aserowy/tmux.nvim",
   --   config = function() return require("tmux").setup() end
   -- })
+  
+  use {
+    "startup-nvim/startup.nvim",
+    requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
+    config = function()
+      require"startup".setup()
+    end
+  }
 
   use {
       'nvim-lualine/lualine.nvim',
