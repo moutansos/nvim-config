@@ -90,6 +90,8 @@ dap.adapters.coreclr = {
     args = { '--interpreter=vscode' },
 }
 
+dap.adapters.netcoredbg = dap.adapters.coreclr
+
 dap.configurations.cs = {
   {
     name = "Launch - netcoredbg (dev)",

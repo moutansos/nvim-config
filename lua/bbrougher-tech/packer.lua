@@ -33,6 +33,16 @@ return require('packer').startup(function(use)
   use('theHamsta/nvim-dap-virtual-text')
   use('nvim-telescope/telescope-dap.nvim')
 
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "Issafalcon/neotest-dotnet",
+    }
+  }
+
   -- use({
   --   "aserowy/tmux.nvim",
   --   config = function() return require("tmux").setup() end
