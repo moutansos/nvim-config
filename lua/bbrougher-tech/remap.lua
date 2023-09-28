@@ -8,6 +8,9 @@ vim.keymap.set("n", "<leader>e", function()
     vim.diagnostic.open_float(0, { scope="line" })
 end)
 
+vim.keymap.set("n", "<leader>o", "o<Esc>")
+vim.keymap.set("n", "<leader>O", "O<Esc>")
+
 vim.keymap.set("n", "<leader>wvs", ":vertical-split<CR>")
 vim.keymap.set("n", "<leader>whs", ":horizontal-split<CR>")
 vim.keymap.set("n", "<leader>wc", ":close<CR>")
