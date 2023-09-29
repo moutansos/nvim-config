@@ -43,6 +43,9 @@ return require('packer').startup(function(use)
     }
   }
 
+  use('jose-elias-alvarez/null-ls.nvim')
+
+
   -- use({
   --   "aserowy/tmux.nvim",
   --   config = function() return require("tmux").setup() end
