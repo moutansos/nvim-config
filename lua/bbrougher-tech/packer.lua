@@ -1,107 +1,107 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
 -- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+vim.cmd([[packadd packer.nvim]])
 
-return require('packer').startup(function(use)
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+return require("packer").startup(function(use)
+	-- Packer can manage itself
+	use("wbthomason/packer.nvim")
 
-  use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.1',
-    -- or                            , branch = '0.1.x',
-    requires = { {'nvim-lua/plenary.nvim'} }
-  }
-  use 'Mofiqul/vscode.nvim'
+	use({
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.1",
+		-- or                            , branch = '0.1.x',
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
+	use("Mofiqul/vscode.nvim")
 
-  use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-  use('nvim-treesitter/nvim-treesitter-context')
-  use('nvim-treesitter/playground')
-  use('theprimeagen/harpoon')
-  use('mbbill/undotree')
-  use('sbdchd/neoformat')
-  use("ojroques/vim-oscyank")
- 
-  use('preservim/nerdtree')
-  use('ryanoasis/vim-devicons')
-  use('Xuyuanp/nerdtree-git-plugin')
-  use('github/copilot.vim')
+	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
+	use("nvim-treesitter/nvim-treesitter-context")
+	use("nvim-treesitter/playground")
+	use("theprimeagen/harpoon")
+	use("mbbill/undotree")
+	use("sbdchd/neoformat")
+	use("ojroques/vim-oscyank")
 
-  use('mfussenegger/nvim-dap')
-  use('leoluz/nvim-dap-go')
-  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-  use('theHamsta/nvim-dap-virtual-text')
-  use('nvim-telescope/telescope-dap.nvim')
+	use("preservim/nerdtree")
+	use("ryanoasis/vim-devicons")
+	use("Xuyuanp/nerdtree-git-plugin")
+	use("github/copilot.vim")
 
-  use {
-    "nvim-neotest/neotest",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim",
-      "Issafalcon/neotest-dotnet",
-    }
-  }
+	use("mfussenegger/nvim-dap")
+	use("leoluz/nvim-dap-go")
+	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+	use("theHamsta/nvim-dap-virtual-text")
+	use("nvim-telescope/telescope-dap.nvim")
+	use("FabijanZulj/blame.nvim")
 
-  use('jose-elias-alvarez/null-ls.nvim')
+	use({
+		"nvim-neotest/neotest",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"Issafalcon/neotest-dotnet",
+		},
+	})
 
+	use("jose-elias-alvarez/null-ls.nvim")
 
-  -- use({
-  --   "aserowy/tmux.nvim",
-  --   config = function() return require("tmux").setup() end
-  -- })
-  
-  use {
-    "startup-nvim/startup.nvim",
-    requires = {"nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim"},
-    config = function()
-      require"startup".setup()
-    end
-  }
+	-- use({
+	--   "aserowy/tmux.nvim",
+	--   config = function() return require("tmux").setup() end
+	-- })
 
-  use {
-      'nvim-lualine/lualine.nvim',
-      requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-  }
+	use({
+		"startup-nvim/startup.nvim",
+		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+		config = function()
+			require("startup").setup()
+		end,
+	})
 
-  use {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v2.x',
-    requires = {
-      -- LSP Support
-      {'neovim/nvim-lspconfig'},             -- Required
-      {                                      -- Optional
-        'williamboman/mason.nvim',
-        run = function()
-          pcall(vim.cmd, 'MasonUpdate')
-        end,
-      },
-      {'williamboman/mason-lspconfig.nvim'}, -- Optional
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	})
 
-      -- Autocompletion
-      {'hrsh7th/nvim-cmp'},     -- Required
-      {'hrsh7th/cmp-nvim-lsp'}, -- Required
-      {'L3MON4D3/LuaSnip'},     -- Required
-    }
-  }
-  use({
-      "Pocco81/auto-save.nvim",
-      config = function()
-          require("auto-save").setup {
-          }
-      end,
-  })
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v2.x",
+		requires = {
+			-- LSP Support
+			{ "neovim/nvim-lspconfig" }, -- Required
+			{ -- Optional
+				"williamboman/mason.nvim",
+				run = function()
+					pcall(vim.cmd, "MasonUpdate")
+				end,
+			},
+			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
 
-  use {
-          "williamboman/mason.nvim"
-      }
+			-- Autocompletion
+			{ "hrsh7th/nvim-cmp" }, -- Required
+			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
+			{ "L3MON4D3/LuaSnip" }, -- Required
+		},
+	})
+	use({
+		"Pocco81/auto-save.nvim",
+		config = function()
+			require("auto-save").setup({})
+		end,
+	})
 
-   use {
-      'numToStr/Comment.nvim',
-      config = function()
-        require('Comment').setup()
-      end
-   } 
+	use({
+		"williamboman/mason.nvim",
+	})
 
-  require("mason").setup()
+	use({
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	})
+
+	require("mason").setup()
 end)
