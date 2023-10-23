@@ -34,8 +34,11 @@ return require("packer").startup(function(use)
 	use("theHamsta/nvim-dap-virtual-text")
 	use("nvim-telescope/telescope-dap.nvim")
 	use("FabijanZulj/blame.nvim")
-    use("https://gitlab.com/HiPhish/rainbow-delimiters.nvim")
-    use("lukas-reineke/indent-blankline.nvim")
+	use({
+		"https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
+		as = "rainbow-delimiters.nvim",
+	})
+	use("lukas-reineke/indent-blankline.nvim")
 
 	use({
 		"nvim-neotest/neotest",
