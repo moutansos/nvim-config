@@ -3,102 +3,143 @@ local lsp = require("lsp-zero")
 lsp.preset("recommended")
 
 lsp.ensure_installed({
-  'tsserver',
-  'rust_analyzer',
+	"tsserver",
+	"rust_analyzer",
 })
 
 -- Fix Undefined global 'vim'
 lsp.nvim_workspace()
 
-
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp = require("cmp")
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
-  ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-  ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-  ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-  ["<C-Space>"] = cmp.mapping.complete(),
+	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+	["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+	["<C-y>"] = cmp.mapping.confirm({ select = true }),
+	["<C-Space>"] = cmp.mapping.complete(),
 })
 
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
+cmp_mappings["<Tab>"] = nil
+cmp_mappings["<S-Tab>"] = nil
 
 lsp.setup_nvim_cmp({
-  mapping = cmp_mappings
+	mapping = cmp_mappings,
 })
 
 lsp.set_preferences({
-    suggest_lsp_servers = false,
-    sign_icons = {
-        error = '',
-        warn = '',
-        hint = 'H',
-        info = ''
-    }
+	suggest_lsp_servers = false,
+	sign_icons = {
+		error = "",
+		warn = "",
+		hint = "H",
+		info = "",
+	},
 })
 
 lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
+	local opts = { buffer = bufnr, remap = false }
 
-  vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-  vim.keymap.set("n", "<leader>gdd", function()
-    vim.cmd(":belowright split")
-    vim.lsp.buf.definition()
-  end, opts)
-  vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-  vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-  vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-  vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-  vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-  vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set("n", "<C-.>", function() vim.lsp.buf.code_action() end, opts)
-  vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-  vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-  vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+	vim.keymap.set("n", "gd", function()
+		vim.lsp.buf.definition()
+	end, opts)
+	vim.keymap.set("n", "<leader>gdd", function()
+		vim.cmd(":belowright split")
+		vim.lsp.buf.definition()
+	end, opts)
+	vim.keymap.set("n", "K", function()
+		vim.lsp.buf.hover()
+	end, opts)
+	vim.keymap.set("n", "<leader>vws", function()
+		vim.lsp.buf.workspace_symbol()
+	end, opts)
+	vim.keymap.set("n", "<leader>vd", function()
+		vim.diagnostic.open_float()
+	end, opts)
+	vim.keymap.set("n", "[d", function()
+		vim.diagnostic.goto_next()
+	end, opts)
+	vim.keymap.set("n", "]d", function()
+		vim.diagnostic.goto_prev()
+	end, opts)
+	vim.keymap.set("n", "<leader>vca", function()
+		vim.lsp.buf.code_action()
+	end, opts)
+	vim.keymap.set("n", "<C-.>", function()
+		vim.lsp.buf.code_action()
+	end, opts)
+	vim.keymap.set("n", "<leader>vrr", function()
+		vim.lsp.buf.references()
+	end, opts)
+	vim.keymap.set("n", "<leader>vrn", function()
+		vim.lsp.buf.rename()
+	end, opts)
+	vim.keymap.set("i", "<C-h>", function()
+		vim.lsp.buf.signature_help()
+	end, opts)
 end)
 
-local lspconfig = require('lspconfig')
-lspconfig.tsserver.setup {
-}
+local lspconfig = require("lspconfig")
+lspconfig.tsserver.setup({})
 lspconfig.denols.setup({
-  root_dir = lspconfig.util.root_pattern("deno.json"),
-  init_options = {
-    lint = true,
-    unstable = true,
-    suggest = {
-      imports = {
-        hosts = {
-          ["https://deno.land"] = true,
-          ["https://cdn.nest.land"] = true,
-          ["https://crux.land"] = true,
-        },
-      },
-    },
-  },
-  on_attach = function()
-    local active_clients = vim.lsp.get_active_clients()
-    for _, client in pairs(active_clients) do
-      -- stop tsserver if denols is already active
-      if client.name == "tsserver" then
-        client.stop()
-      end
-    end
-  end,
+	root_dir = lspconfig.util.root_pattern("deno.json"),
+	init_options = {
+		lint = true,
+		unstable = true,
+		suggest = {
+			imports = {
+				hosts = {
+					["https://deno.land"] = true,
+					["https://cdn.nest.land"] = true,
+					["https://crux.land"] = true,
+				},
+			},
+		},
+	},
+	on_attach = function()
+		local active_clients = vim.lsp.get_active_clients()
+		for _, client in pairs(active_clients) do
+			-- stop tsserver if denols is already active
+			if client.name == "tsserver" then
+				client.stop()
+			end
+		end
+	end,
 })
 
 lspconfig.csharp_ls.setup({
-  root_dir = function(startpath)
-	return lspconfig.util.root_pattern("*.sln")(startpath)
-		or lspconfig.util.root_pattern("*.csproj")(startpath)
-	    or lspconfig.util.root_pattern(".git")(startpath)
-  end,
-                        
+	root_dir = function(startpath)
+		return lspconfig.util.root_pattern("*.sln")(startpath)
+			or lspconfig.util.root_pattern("*.csproj")(startpath)
+			or lspconfig.util.root_pattern(".git")(startpath)
+	end,
 })
+
+lspconfig.yamlls.setup({
+	settings = {
+		yaml = {
+			schemas = {
+				kubernetes = "kube.*.{yaml,yml}",
+				["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+				["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+				["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+				["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+				["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+				["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+				["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+				["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+				["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+				["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+				["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+				["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+			},
+		},
+	},
+})
+
+lspconfig.jsonls.setup({})
 
 lsp.setup()
 
 vim.diagnostic.config({
-    virtual_text = true
+	virtual_text = true,
 })
-
-

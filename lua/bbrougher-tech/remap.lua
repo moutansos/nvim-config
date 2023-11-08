@@ -8,7 +8,7 @@ vim.keymap.set("n", "<leader>nf", ":NERDTreeFocus<CR>")
 vim.keymap.set("n", "<leader>nt", ":NERDTreeToggle<CR>")
 vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>e", function()
-	vim.diagnostic.open_float(0, { scope = "line" })
+	vim.diagnostic.open_float({ scope = "line", source = true })
 end)
 
 vim.keymap.set("n", "<leader>o", "o<Esc>")
