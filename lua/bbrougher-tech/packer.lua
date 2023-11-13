@@ -23,9 +23,7 @@ return require("packer").startup(function(use)
 	use("sbdchd/neoformat")
 	use("ojroques/vim-oscyank")
 
-	use("preservim/nerdtree")
 	use("ryanoasis/vim-devicons")
-	use("Xuyuanp/nerdtree-git-plugin")
 	use("github/copilot.vim")
 
 	use("mfussenegger/nvim-dap")
