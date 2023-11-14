@@ -96,6 +96,7 @@ require('pckr').add{
             { "L3MON4D3/LuaSnip" }, -- Required
         },
     };
+    "rafamadriz/friendly-snippets";
     {
         "Pocco81/auto-save.nvim",
         config = function()
