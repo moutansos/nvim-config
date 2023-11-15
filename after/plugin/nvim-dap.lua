@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 vim.keymap.set("n", "<F5>", "<cmd>lua require('dap').continue()<CR>")
 vim.keymap.set("n", "<F10>", "<cmd>lua require('dap').step_over()<CR>")
 vim.keymap.set("n", "<F11>", "<cmd>lua require('dap').step_into()<CR>")

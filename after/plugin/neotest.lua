@@ -1,3 +1,5 @@
+vim.g.mapleader = " "
+
 local nt = require("neotest")
 
 nt.setup({
