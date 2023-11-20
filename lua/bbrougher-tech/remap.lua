@@ -22,6 +22,8 @@ vim.keymap.set("n", "<leader>wk", "<C-w>k")
 vim.keymap.set("n", "<leader>wl", "<C-w>l")
 vim.keymap.set("n", "<leader>wh", "<C-w>h")
 
+vim.keymap.set("n", "<leader>s", ":setlocal spell!<CR>")
+
 vim.keymap.set("n", "<m-n>", ":tabnew<CR>")
 vim.keymap.set("n", "<m-c>", ":tabclose<CR>")
 vim.keymap.set("n", "<m-1>", ":tabn1<CR>")

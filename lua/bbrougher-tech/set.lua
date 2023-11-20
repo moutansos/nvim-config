@@ -16,6 +16,9 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = false
+
 -- auto-reload files when modified externally
 -- https://unix.stackexchange.com/a/383044
 vim.o.autoread = true
