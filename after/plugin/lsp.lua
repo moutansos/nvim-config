@@ -7,6 +7,8 @@ lsp.preset("recommended")
 lsp.ensure_installed({
 	"tsserver",
 	"rust_analyzer",
+    "yamlls",
+    "jsonls",
 })
 
 -- Fix Undefined global 'vim'
@@ -114,6 +116,10 @@ lspconfig.csharp_ls.setup({
 			or lspconfig.util.root_pattern("*.csproj")(startpath)
 			or lspconfig.util.root_pattern(".git")(startpath)
 	end,
+})
+
+lspconfig.htmx.setup({
+    filetypes = { "html" },
 })
 
 lspconfig.yamlls.setup({
