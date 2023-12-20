@@ -44,10 +44,6 @@ require("pckr").add({
 	"theHamsta/nvim-dap-virtual-text",
 	"nvim-telescope/telescope-dap.nvim",
 	"FabijanZulj/blame.nvim",
-	{
-		"https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
-		as = "rainbow-delimiters.nvim",
-	},
 	"lukas-reineke/indent-blankline.nvim",
 	{
 		"nvim-neotest/neotest",
@@ -78,7 +74,7 @@ require("pckr").add({
 	},
 	{
 		"VonHeikemen/lsp-zero.nvim",
-		branch = "v2.x",
+		branch = "v3.x",
 		requires = {
 			-- LSP Support
 			{ "neovim/nvim-lspconfig" }, -- Required
@@ -87,13 +83,20 @@ require("pckr").add({
 				run = function()
 					pcall(vim.cmd, "MasonUpdate")
 				end,
+				config = function()
+					require("mason").setup({})
+				end,
 			},
-			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+			{
+				"williamboman/mason-lspconfig.nvim",
+				config = function() end,
+			}, -- Optional
 
 			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" }, -- Required
 			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
 			{ "L3MON4D3/LuaSnip" }, -- Required
+			{ "saadparwaiz1/cmp_luasnip" },
 		},
 	},
 	"rafamadriz/friendly-snippets",
