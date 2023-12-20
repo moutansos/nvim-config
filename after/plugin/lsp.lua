@@ -4,17 +4,30 @@ local lsp = require("lsp-zero")
 
 lsp.preset("recommended")
 
-lsp.ensure_installed({
+local ensureInstalled = {
 	"tsserver",
 	"rust_analyzer",
-    "yamlls",
-    "jsonls",
+	"yamlls",
+	"jsonls",
+}
+
+-- lsp.ensure_installed(ensureInstalled) -- Deprecated since 2.x
+require("mason-lspconfig").setup({
+	ensure_installed = ensureInstalled,
+	handlers = {
+		lsp.default_setup,
+		lua_ls = function()
+			local lua_opts = lsp.nvim_lua_ls()
+			require("lspconfig").lua_ls.setup(lua_opts)
+		end,
+	},
 })
 
 -- Fix Undefined global 'vim'
-lsp.nvim_workspace()
+-- lsp.nvim_workspace() -- Deprecated since 2.x
 
 local cmp = require("cmp")
+local cmp_format = require("lsp-zero").cmp_format()
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
 	["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
@@ -26,17 +39,33 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 cmp_mappings["<Tab>"] = nil
 cmp_mappings["<S-Tab>"] = nil
 
-lsp.setup_nvim_cmp({
+-- lsp.setup_nvim_cmp({
+-- 	mapping = cmp_mappings,
+-- })
+
+cmp.setup({
 	mapping = cmp_mappings,
+	formatting = cmp_format,
+	sources = {
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+		{ name = "buffer" },
+		{ name = "path" },
+	},
+	snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body)
+		end,
+	},
 })
 
 lsp.set_preferences({
 	suggest_lsp_servers = false,
 	sign_icons = {
-		error = "",
-		warn = "",
+		error = "?",
+		warn = "?",
 		hint = "H",
-		info = "",
+		info = "?",
 	},
 })
 
@@ -119,7 +148,7 @@ lspconfig.csharp_ls.setup({
 })
 
 lspconfig.htmx.setup({
-    filetypes = { "html" },
+	filetypes = { "html" },
 })
 
 lspconfig.yamlls.setup({
