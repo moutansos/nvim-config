@@ -1,5 +1,5 @@
 return {
- 	"jose-elias-alvarez/null-ls.nvim",
+    "jose-elias-alvarez/null-ls.nvim",
     config = function()
         setup, null_ls = pcall(require, "null-ls")
         if not setup then
