@@ -7,7 +7,6 @@ return {
     },
     lazy = false,
 	config = function()
-        print("rest-nvim config loading")
 		require("rest-nvim").setup({
 			-- Open request results in a horizontal split
 			result_split_horizontal = false,
