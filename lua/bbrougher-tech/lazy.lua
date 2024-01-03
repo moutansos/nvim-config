@@ -46,4 +46,5 @@ require("lazy").setup({
     "numToStr/Comment.nvim",
     require("bbrougher-tech.plugins.nvim-rest"),
     require("bbrougher-tech.plugins.luasnip"),
+    require("bbrougher-tech.plugins.cloak"),
 })
