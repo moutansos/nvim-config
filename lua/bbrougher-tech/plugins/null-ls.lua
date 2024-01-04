@@ -31,6 +31,7 @@ return {
                         "markdown.mdx",
                         "graphql",
                         "handlebars",
+                        "xml",
                     },
                 }),
                 formatting.stylua,
