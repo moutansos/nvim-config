@@ -47,4 +47,12 @@ require("lazy").setup({
     require("bbrougher-tech.plugins.nvim-rest"),
     require("bbrougher-tech.plugins.luasnip"),
     require("bbrougher-tech.plugins.cloak"),
+    {
+        "terrortylor/nvim-comment",
+        cmd = { "CommentToggle" },
+        keys = { "gcc", "gc" },
+        config = function()
+            require("nvim_comment").setup({})
+        end,
+    },
 })
