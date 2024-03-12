@@ -4,7 +4,8 @@ return {
     config = function()
         require('lualine').setup {
             options = {
-                theme = 'powerline'
+               theme = 'powerline'
+               -- theme = 'auto'
             }
         }
     end,

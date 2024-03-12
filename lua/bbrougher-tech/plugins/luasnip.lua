@@ -57,6 +57,15 @@ return {
             }
         })
 
+        ls.add_snippets("markdown", {
+            s({ 
+                trig = "mdl", name = "mdl", dscr = "markdown link" },
+                {
+                    t("["), i(1, "link"), t("]("), i(2, "url"), t(")"),
+                }
+            ),
+        })
+
         require("luasnip.loaders.from_vscode").lazy_load()
     end,
 }

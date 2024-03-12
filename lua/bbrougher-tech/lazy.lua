@@ -1,4 +1,7 @@
+vim.g.mapleader = " "
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
         "git",
@@ -50,9 +53,35 @@ require("lazy").setup({
     {
         "terrortylor/nvim-comment",
         cmd = { "CommentToggle" },
-        keys = { "gcc", "gc" },
+        keys = {
+            {
+                "gcc",
+                mode = { "v" },
+            },
+            "gc",
+        },
         config = function()
             require("nvim_comment").setup({})
+        end,
+    },
+    {
+        "ThePrimeagen/vim-apm",
+        keys = {
+            {
+                "<leader>pm",
+                function()
+                    require("vim-apm").toggle_monitor()
+                end,
+                mode  = {"n"},
+            },
+        },
+        config = function()
+            local apm = require("vim-apm")
+
+            apm:setup({})
+            vim.keymap.set("n", "<leader>pm", function()
+                apm:toggle_monitor()
+            end)
         end,
     },
 })
