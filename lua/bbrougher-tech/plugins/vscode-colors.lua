@@ -9,12 +9,12 @@ local old = {
             -- style = 'light'
 
             -- Enable transparent background
-            transparent = true,
+            -- transparent = true,
 
             -- Enable italic comment
             italic_comments = true,
 
-            disable_nvimtree_bg = true,
+            -- disable_nvimtree_bg = true,
 
             -- Override colors (see ./lua/vscode/colors.lua)
             color_overrides = {
@@ -29,6 +29,10 @@ local old = {
             },
         })
         require("vscode").load()
+        vim.cmd([[highlight Normal guibg=NONE]])
+        vim.cmd([[highlight NonText guibg=NONE]])
+        vim.cmd([[highlight Normal ctermbg=NONE]])
+        vim.cmd([[highlight NonText ctermbg=NONE]])
     end,
 }
 
@@ -55,4 +59,4 @@ local new = {
     },
 }
 
-return new
+return old
