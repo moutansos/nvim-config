@@ -45,7 +45,31 @@ require("lazy").setup({
     require("bbrougher-tech.plugins.lualine"),
     require("bbrougher-tech.plugins.lsp-zero"),
     "rafamadriz/friendly-snippets",
-    "Pocco81/auto-save.nvim",
+    {
+        "Pocco81/auto-save.nvim",
+        -- enabled = false,
+        config = function()
+            require("auto-save").setup {
+                condition = function(buf)
+                    local fn = vim.fn
+                    local utils = require("auto-save.utils.data")
+
+                    -- don't save the harpoon menu
+                    local bufName = vim.api.nvim_buf_get_name(buf)
+                    if string.match(bufName, "__harpoon.menu__") then
+                        return false
+                    end
+
+                    if
+                        fn.getbufvar(buf, "&modifiable") == 1 and
+                        utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+                        return true -- met condition(s), can save
+                    end
+                    return false    -- can't save
+                end
+            }
+        end,
+    },
     "numToStr/Comment.nvim",
     require("bbrougher-tech.plugins.nvim-rest"),
     require("bbrougher-tech.plugins.luasnip"),
@@ -72,7 +96,7 @@ require("lazy").setup({
                 function()
                     require("vim-apm").toggle_monitor()
                 end,
-                mode  = {"n"},
+                mode = { "n" },
             },
         },
         config = function()
@@ -83,5 +107,10 @@ require("lazy").setup({
                 apm:toggle_monitor()
             end)
         end,
+    },
+    {
+      "vhyrro/luarocks.nvim",
+      priority = 1000,
+      config = true,
     },
 })

@@ -62,3 +62,8 @@ vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
 vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
 vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
 
+vim.keymap.set('n', '<leader>sfn', function()
+    local name = vim.api.nvim_buf_get_name(0)
+    local filename = name:match("^.+[/\\](.*)$"):gsub("%..+$", "")
+    vim.api.nvim_put({filename}, "", true, true)
+end)
