@@ -1,3 +1,8 @@
+-- For some reason lualine doesn't behave if you load it beforehand
+function hiFix()
+    require('lualine').setup()
+end
+
 local old = {
     "Mofiqul/vscode.nvim",
     lazy = false,
@@ -9,7 +14,7 @@ local old = {
             -- style = 'light'
 
             -- Enable transparent background
-            -- transparent = true,
+            transparent = true,
 
             -- Enable italic comment
             italic_comments = true,
@@ -29,17 +34,14 @@ local old = {
             },
         })
         require("vscode").load()
-        vim.cmd([[highlight Normal guibg=NONE]])
-        vim.cmd([[highlight NonText guibg=NONE]])
-        vim.cmd([[highlight Normal ctermbg=NONE]])
-        vim.cmd([[highlight NonText ctermbg=NONE]])
+        hiFix()
     end,
 }
+
 
 local new = {
     "askfiy/visual_studio_code",
     config = function()
-
         -- require("visual_studio_code").setup({
         --     mode = "dark",
         --     preset = true,
