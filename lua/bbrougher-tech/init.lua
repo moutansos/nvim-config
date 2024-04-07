@@ -1,4 +1,8 @@
+-- Plugins
 require("bbrougher-tech.lazy")
+require("bbrougher-tech.stashdown")
+
+-- Settings
 require("bbrougher-tech.set")
 require("bbrougher-tech.filetype")
 require("bbrougher-tech.commands")
