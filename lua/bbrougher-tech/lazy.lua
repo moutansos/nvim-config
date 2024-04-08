@@ -54,9 +54,19 @@ require("lazy").setup({
                     local fn = vim.fn
                     local utils = require("auto-save.utils.data")
 
+                    if vim.api.nvim_buf_is_loaded(buf) == 0 then
+                        return false
+                    end
+
                     -- don't save the harpoon menu
-                    local bufName = vim.api.nvim_buf_get_name(buf)
-                    if string.match(bufName, "__harpoon.menu__") then
+                    local bufName = ''
+                    if pcall(function()
+                        bufName = vim.api.nvim_buf_get_name(buf)
+                    end) then
+                        if string.match(bufName, "__harpoon.menu__") then
+                            return false
+                        end
+                    else
                         return false
                     end
 
