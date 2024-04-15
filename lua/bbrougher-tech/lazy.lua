@@ -27,6 +27,11 @@ require("lazy").setup({
     "ryanoasis/vim-devicons",
     "github/copilot.vim",
     "leoluz/nvim-dap-go",
+    {
+        "vhyrro/luarocks.nvim",
+        priority = 1000,
+        config = true,
+    },
     require("bbrougher-tech.plugins.nvim-dap-ui"),
     "theHamsta/nvim-dap-virtual-text",
     "nvim-telescope/telescope-dap.nvim",
@@ -49,7 +54,7 @@ require("lazy").setup({
         "Pocco81/auto-save.nvim",
         -- enabled = false,
         config = function()
-            require("auto-save").setup {
+            require("auto-save").setup({
                 condition = function(buf)
                     local fn = vim.fn
                     local utils = require("auto-save.utils.data")
@@ -59,10 +64,10 @@ require("lazy").setup({
                     end
 
                     -- don't save the harpoon menu
-                    local bufName = ''
+                    local bufName = ""
                     if pcall(function()
-                        bufName = vim.api.nvim_buf_get_name(buf)
-                    end) then
+                            bufName = vim.api.nvim_buf_get_name(buf)
+                        end) then
                         if string.match(bufName, "__harpoon.menu__") then
                             return false
                         end
@@ -70,18 +75,15 @@ require("lazy").setup({
                         return false
                     end
 
-                    if
-                        fn.getbufvar(buf, "&modifiable") == 1 and
-                        utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+                    if fn.getbufvar(buf, "&modifiable") == 1 and utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
                         return true -- met condition(s), can save
                     end
-                    return false    -- can't save
-                end
-            }
+                    return false -- can't save
+                end,
+            })
         end,
     },
     "numToStr/Comment.nvim",
-    require("bbrougher-tech.plugins.nvim-rest"),
     require("bbrougher-tech.plugins.luasnip"),
     require("bbrougher-tech.plugins.cloak"),
     {
@@ -119,8 +121,7 @@ require("lazy").setup({
         end,
     },
     {
-      "vhyrro/luarocks.nvim",
-      priority = 1000,
-      config = true,
+        "fabridamicelli/cronex.nvim",
+        opts = {},
     },
 })
