@@ -27,6 +27,12 @@ local telescopeConfig = {
                 require("telescope.builtin").grep_string({ search = vim.fn.input("Grep > ") })
             end,
         },
+        {
+            "<leader>vh",
+            function()
+                require("telescope.builtin").help_tags()
+            end,
+        },
     },
     config = function()
         require("telescope").setup({
