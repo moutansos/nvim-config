@@ -175,8 +175,14 @@ lspconfig.yamlls.setup({
 
 lspconfig.jsonls.setup({})
 
+lspconfig.mojo.setup({
+    cmd = { "mojo-lsp-server" },
+    filetypes = { "mojo" },
+})
+
 lsp.setup()
 
 vim.diagnostic.config({
 	virtual_text = true,
 })
+
