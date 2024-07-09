@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "-", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>f", function()
 	vim.lsp.buf.format()
 end)
@@ -42,6 +43,9 @@ vim.keymap.set("n", "<m-8>", ":tabn8<CR>")
 vim.keymap.set("n", "<m-9>", ":tabn9<CR>")
 
 vim.keymap.set("n", "C-[", "<esc>")
+
+vim.keymap.set("n", "<C-j>", ":cnext<CR>")
+vim.keymap.set("n", "<C-k>", ":cprev<CR>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")

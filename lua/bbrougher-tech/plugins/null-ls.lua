@@ -1,5 +1,5 @@
 return {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     config = function()
         setup, null_ls = pcall(require, "null-ls")
         if not setup then
@@ -35,7 +35,7 @@ return {
                     },
                 }),
                 formatting.stylua,
-                diagnostics.eslint_d,
+                -- diagnostics.eslint_d,
             },
         })
     end,
