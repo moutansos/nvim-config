@@ -2,11 +2,11 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "-", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>f", function()
-	vim.lsp.buf.format()
+    vim.lsp.buf.format()
 end)
 vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>e", function()
-	vim.diagnostic.open_float({ scope = "line", source = true })
+    vim.diagnostic.open_float({ scope = "line", source = true })
 end)
 
 vim.keymap.set("n", "<leader>o", "o<Esc>")
@@ -25,6 +25,13 @@ vim.keymap.set("n", "<leader>wj", "<C-w>j")
 vim.keymap.set("n", "<leader>wk", "<C-w>k")
 vim.keymap.set("n", "<leader>wl", "<C-w>l")
 vim.keymap.set("n", "<leader>wh", "<C-w>h")
+
+vim.keymap.set("n", "<leader>wf", function()
+    local currentFileName = vim.fn.expand("%:t")
+    -- Write variable to buffer
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    vim.api.nvim_buf_set_text(0, row - 1, 0, row - 1, 0, { currentFileName })
+end)
 
 vim.keymap.set("n", "<leader>sc", ":setlocal spell!<CR>")
 
@@ -50,9 +57,9 @@ vim.keymap.set("n", "<C-k>", ":cprev<CR>")
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set(
-	"v",
-	"<C-c>",
-	"y:!echo <C-r>=escape(substitute(shellescape(getreg('\"')), '\\n', '\\r', 'g'), '#%!')<CR> <Bar> clip.exe<CR><CR>"
+    "v",
+    "<C-c>",
+    "y:!echo <C-r>=escape(substitute(shellescape(getreg('\"')), '\\n', '\\r', 'g'), '#%!')<CR> <Bar> clip.exe<CR><CR>"
 )
 
 vim.keymap.set("i", "ii", "<ESC>")
