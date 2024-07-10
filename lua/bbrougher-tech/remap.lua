@@ -26,11 +26,18 @@ vim.keymap.set("n", "<leader>wk", "<C-w>k")
 vim.keymap.set("n", "<leader>wl", "<C-w>l")
 vim.keymap.set("n", "<leader>wh", "<C-w>h")
 
-vim.keymap.set("n", "<leader>wf", function()
+vim.keymap.set("n", "<leader>wff", function()
     local currentFileName = vim.fn.expand("%:t")
-    -- Write variable to buffer
     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-    vim.api.nvim_buf_set_text(0, row - 1, 0, row - 1, 0, { currentFileName })
+    vim.api.nvim_buf_set_text(0, row - 1, col + 1, row - 1, col + 1, { currentFileName })
+    vim.api.nvim_win_set_cursor(0, { row, col + currentFileName:len() + 1 })
+end)
+
+vim.keymap.set("n", "<leader>wfn", function()
+    local currentFileName = vim.fn.expand("%:t:r")
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+    vim.api.nvim_buf_set_text(0, row - 1, col + 1, row - 1, col + 1, { currentFileName })
+    vim.api.nvim_win_set_cursor(0, { row, col + currentFileName:len() + 1 })
 end)
 
 vim.keymap.set("n", "<leader>sc", ":setlocal spell!<CR>")
