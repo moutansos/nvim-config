@@ -6,7 +6,11 @@ vim.keymap.set("n", "<leader>sl", function()
 end)
 
 local function getNamespaceForCurrentBuffer()
-    local currentFile = vim.fn.expand("%:h")
+    local currentFile = vim.fn.expand("%:.:r")
+
+    -- This worked on linux. Not windows. May have to switch on OS
+    --local currentFile = vim.fn.expand("%:.:r")
+
     local namespaceName = currentFile:gsub("%\\", "."):gsub("%/", ".")
     return namespaceName
 end

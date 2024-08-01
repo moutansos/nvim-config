@@ -147,6 +147,11 @@ require("lazy").setup({
                         endpoint = "https://api.openai.com/v1/chat/completions",
                         secret = os.getenv("OPENAI_API_KEY"),
                     },
+                    azure = {
+                        disable = false,
+                        endpoint = os.getenv("AZURE_OPEN_AI_ENDPOINT"),
+                        secret = os.getenv("OPENAI_API_KEY"),
+                    },
                     copilot = {
                         disable = false,
                         endpoint = "https://api.githubcopilot.com/chat/completions",
