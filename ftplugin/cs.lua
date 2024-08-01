@@ -7,11 +7,16 @@ end)
 
 local function getNamespaceForCurrentBuffer()
     local currentFile = vim.fn.expand("%:.:r")
-
     -- This worked on linux. Not windows. May have to switch on OS
     --local currentFile = vim.fn.expand("%:.:r")
 
     local namespaceName = currentFile:gsub("%\\", "."):gsub("%/", ".")
+    local lastDotIndex = string.find(namespaceName, "%.[^%.]*$")
+
+    if lastDotIndex ~= nil then
+        namespaceName = string.sub(namespaceName, 1, lastDotIndex - 1)
+    end
+
     return namespaceName
 end
 
