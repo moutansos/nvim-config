@@ -157,7 +157,6 @@ require("lazy").setup({
             end
 
             require("gp").setup({
-                openapi_api_key = os.getenv("OPENAI_API_KEY"),
                 providers = {
                     openai = {
                         disable = false,
