@@ -140,7 +140,24 @@ require("lazy").setup({
                 .. "- Don't elide any code from your output if the answer requires coding.\n"
                 .. "- Take a deep breath; You've got this!\n"
 
+            local osName = vim.loop.os_uname().sysname
+            local copilotSecrets = {}
+            if osName == "Windows_NT" then
+                copilotSecrets = {
+                    "cmd",
+                    "/c",
+                    "type %LOCALAPPDATA%\\github-copilot\\hosts.json | wsl sed -e 's/.*oauth_token...//;s/\".*//'",
+                }
+            else
+                copilotSecrets = {
+                    "bash",
+                    "-c",
+                    "cat ~/.config/github-copilot/hosts.json | sed -e 's/.*oauth_token...//;s/\".*//'",
+                }
+            end
+
             require("gp").setup({
+                openapi_api_key = os.getenv("OPENAI_API_KEY"),
                 providers = {
                     openai = {
                         disable = false,
@@ -155,11 +172,7 @@ require("lazy").setup({
                     copilot = {
                         disable = false,
                         endpoint = "https://api.githubcopilot.com/chat/completions",
-                        secret = {
-                            "bash",
-                            "-c",
-                            "cat ~/.config/github-copilot/hosts.json | sed -e 's/.*oauth_token...//;s/\".*//'",
-                        },
+                        secret = copilotSecrets,
                     },
                     ollama = {
                         disable = false,
