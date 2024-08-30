@@ -35,7 +35,6 @@ return {
                     },
                 }),
                 formatting.stylua,
-                -- diagnostics.eslint_d,
             },
         })
     end,

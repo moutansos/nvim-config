@@ -36,7 +36,7 @@ require("lazy").setup({
     "theHamsta/nvim-dap-virtual-text",
     "nvim-telescope/telescope-dap.nvim",
     "FabijanZulj/blame.nvim",
-    require("bbrougher-tech.plugins.indent-blankline"),
+    -- require("bbrougher-tech.plugins.indent-blankline"),
     require("bbrougher-tech.plugins.neotest"),
     require("bbrougher-tech.plugins.null-ls"),
     {
