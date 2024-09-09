@@ -5,7 +5,7 @@ local lsp = require("lsp-zero")
 lsp.preset("recommended")
 
 local ensureInstalled = {
-	"tsserver",
+    "ts_ls",
 	"rust_analyzer",
 	"yamlls",
 	"jsonls",
@@ -112,7 +112,6 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 local lspconfig = require("lspconfig")
-lspconfig.tsserver.setup({})
 lspconfig.denols.setup({
 	root_dir = lspconfig.util.root_pattern("deno.json"),
 	init_options = {
