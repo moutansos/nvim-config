@@ -16,15 +16,15 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
-vim.opt.spelllang = 'en_us'
+vim.opt.spelllang = "en_us"
 vim.opt.spell = false
 
 -- auto-reload files when modified externally
 -- https://unix.stackexchange.com/a/383044
 vim.o.autoread = true
 vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
-  command = "if mode() != 'c' | checktime | endif",
-  pattern = { "*" },
+    command = "if mode() != 'c' | checktime | endif",
+    pattern = { "*" },
 })
 
 vim.opt.termguicolors = true
@@ -43,27 +43,41 @@ vim.g.mapleader = " "
 vim.wo.relativenumber = true
 
 -- vim.opt.clipboard = "unnamedplus"
-if vim.fn.has('wsl') == 1 then
-    vim.g.clipboard = { 
-        name = 'WslClipboard',
+if vim.fn.has("wsl") == 1 then
+    vim.g.clipboard = {
+        name = "WslClipboard",
         copy = {
-            ["+"] = 'clip.exe',
-            ["*"] = 'clip.exe',
+            ["+"] = "clip.exe",
+            ["*"] = "clip.exe",
         },
         paste = {
-            ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", [string]::Empty))',
-            ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", [string]::Empty))',
+            ["+"] =
+            'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", [string]::Empty))',
+            ["*"] =
+            'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", [string]::Empty))',
         },
         cache_enabled = 0,
-   }
+    }
 end
+
+vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+        ["+"] = require("vim.clipboard.osc52").copy,
+        ["*"] = require("vim.clipboard.osc52").copy,
+    },
+    paste = {
+        ["+"] = require("vim.clipboard.osc52").paste,
+        ["*"] = require("vim.clipboard.osc52").paste,
+    },
+}
 
 -- vim.keymap.set('n', '<leader>c', '<Plug>OSCYankOperator')
 -- vim.keymap.set('n', '<leader>cc', '<leader>c_', {remap = true})
 -- vim.keymap.set('v', '<leader>c', '<Plug>OSCYankVisual')
 
-vim.keymap.set('n', '<leader>sfn', function()
+vim.keymap.set("n", "<leader>sfn", function()
     local name = vim.api.nvim_buf_get_name(0)
     local filename = name:match("^.+[/\\](.*)$"):gsub("%..+$", "")
-    vim.api.nvim_put({filename}, "", true, true)
+    vim.api.nvim_put({ filename }, "", true, true)
 end)
