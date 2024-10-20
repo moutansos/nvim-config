@@ -82,6 +82,16 @@ return {
                     -- system prompt (use this to specify the persona/role of the AI)
                     system_prompt = default_chat_system_prompt,
                 },
+                {
+                    provider = "ollama",
+                    name = "llama3.1",
+                    chat = true,
+                    command = false,
+                    -- string with model name or table with model name and parameters
+                    model = { model = "llama3.1", temperature = 1.1, top_p = 1 },
+                    -- system prompt (use this to specify the persona/role of the AI)
+                    system_prompt = default_chat_system_prompt,
+                },
             },
         })
     end,
