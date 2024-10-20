@@ -48,6 +48,18 @@ vim.keymap.set("n", "<leader>gmc", function()
     vim.api.nvim_feedkeys("A", "n", false)
 end)
 
+vim.keymap.set("n", "<leader>gmn", function()
+    local namespace = getNamespaceForCurrentBuffer()
+    local classTemplate = {
+        "namespace " .. namespace ..";",
+    }
+
+    local row, column = unpack(vim.api.nvim_win_get_cursor(0))
+    vim.api.nvim_buf_set_lines(0, 0, 0, false, classTemplate)
+    vim.api.nvim_win_set_cursor(0, { row + 1, column })
+    vim.api.nvim_feedkeys("A", "n", false)
+end)
+
 vim.keymap.set("n", "<leader>gcc", function()
     local namespace = getNamespaceForCurrentBuffer()
     local name = getTypeNameFromCurrentFile()
@@ -68,6 +80,22 @@ vim.keymap.set("n", "<leader>gcc", function()
     local row, column = unpack(vim.api.nvim_win_get_cursor(0))
     vim.api.nvim_buf_set_lines(0, 0, 0, false, classTemplate)
     vim.api.nvim_win_set_cursor(0, { row + 4, column })
+    vim.api.nvim_feedkeys("A", "n", false)
+end)
+
+vim.keymap.set("n", "<leader>gcn", function()
+    local namespace = getNamespaceForCurrentBuffer()
+    local name = getTypeNameFromCurrentFile()
+    local classTemplate = {
+        "namespace " .. namespace,
+        "{",
+        "",
+        "}"
+    }
+
+    local row, column = unpack(vim.api.nvim_win_get_cursor(0))
+    vim.api.nvim_buf_set_lines(0, 0, 0, false, classTemplate)
+    vim.api.nvim_win_set_cursor(0, { row + 2, column })
     vim.api.nvim_feedkeys("A", "n", false)
 end)
 

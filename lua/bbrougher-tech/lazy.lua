@@ -25,7 +25,7 @@ require("lazy").setup({
     "sbdchd/neoformat",
     "ojroques/vim-oscyank",
     "ryanoasis/vim-devicons",
-    "github/copilot.vim",
+    -- "github/copilot.vim",
     "leoluz/nvim-dap-go",
     {
         "vhyrro/luarocks.nvim",
@@ -125,5 +125,5 @@ require("lazy").setup({
         opts = {},
     },
     require("bbrougher-tech.plugins.gp"),
-    require("bbrougher-tech.plugins.avante"),
+    -- require("bbrougher-tech.plugins.avante"),
 })
