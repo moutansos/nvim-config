@@ -1,7 +1,13 @@
 vim.filetype.add({
     extension = {
-        mdx = 'mdx'
-    }
+        mdx = "mdx",
+    },
 })
 
 vim.treesitter.language.register("markdown", "mdx")
+
+vim.filetype.add({
+    pattern = {
+        [".*%.blade%.php"] = "blade",
+    },
+})
