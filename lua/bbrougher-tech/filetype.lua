@@ -4,6 +4,12 @@ vim.filetype.add({
     },
 })
 
+vim.filetype.add({
+    extension = {
+        http = "http",
+    }
+})
+
 vim.treesitter.language.register("markdown", "mdx")
 
 vim.filetype.add({
