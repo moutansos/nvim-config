@@ -3,7 +3,9 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "-", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>f", function()
     vim.lsp.buf.format({
-        filter = function(client) return client.name ~= "tsserver" end,
+        filter = function(client)
+            return client.name ~= "tsserver"
+        end,
     })
 end)
 vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
@@ -40,6 +42,15 @@ vim.keymap.set("n", "<leader>wfn", function()
     local row, col = unpack(vim.api.nvim_win_get_cursor(0))
     vim.api.nvim_buf_set_text(0, row - 1, col + 1, row - 1, col + 1, { currentFileName })
     vim.api.nvim_win_set_cursor(0, { row, col + currentFileName:len() + 1 })
+end)
+
+vim.keymap.set("n", "<leader>df", function()
+    local confirm = vim.fn.confirm("Delete buffer and file?", "&Yes\n&No", 2)
+
+    if confirm == 1 then
+        os.remove(vim.fn.expand("%"))
+        vim.api.nvim_buf_delete(0, { force = true })
+    end
 end)
 
 vim.keymap.set("n", "<leader>sc", ":setlocal spell!<CR>")
