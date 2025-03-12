@@ -1,6 +1,5 @@
 -- Plugins
 require("bbrougher-tech.lazy")
-require("bbrougher-tech.stashdown")
 
 -- Settings
 require("bbrougher-tech.set")

@@ -153,6 +153,10 @@ lspconfig.csharp_ls.setup({
             or lspconfig.util.root_pattern("*.csproj")(startpath)
             or lspconfig.util.root_pattern(".git")(startpath)
     end,
+    -- handlers = {
+    --     ["textDocument/definition"] = require('csharpls_extended').handler,
+    --     ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
+    -- },
 })
 
 lspconfig.htmx.setup({
