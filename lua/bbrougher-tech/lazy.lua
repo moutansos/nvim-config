@@ -78,7 +78,7 @@ require("lazy").setup({
                     if fn.getbufvar(buf, "&modifiable") == 1 and utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
                         return true -- met condition(s), can save
                     end
-                    return false    -- can't save
+                    return false -- can't save
                 end,
             })
         end,
@@ -128,16 +128,16 @@ require("lazy").setup({
     -- require("bbrougher-tech.plugins.avante"),
     {
         "ricardoramirezr/blade-nav.nvim",
-        dependencies = {                  -- totally optional
-            "hrsh7th/nvim-cmp",           -- if using nvim-cmp
+        dependencies = {         -- totally optional
+            "hrsh7th/nvim-cmp",  -- if using nvim-cmp
         },
-        ft = { "blade", "php" },          -- optional, improves startup time
+        ft = { "blade", "php" }, -- optional, improves startup time
         opts = {
             close_tag_on_complete = true, -- default: true
         },
     },
     {
-        'stevearc/dressing.nvim',
+        "stevearc/dressing.nvim",
         opts = {},
     },
     {
@@ -145,12 +145,8 @@ require("lazy").setup({
         -- name = "stashdown",
         "msyke/stashdown.nvim",
         config = function()
-            local sd = require('stashdown')
+            local sd = require("stashdown")
             sd.setup()
-            -- vim.keymap.set("n", "<leader>sdn", ":Stashdown nf<CR>")
-            -- vim.keymap.set("n", "<leader>sde", ":Stashdown ne<CR>")
-            -- vim.keymap.set("n", "<leader>sda", ":Stashdown a<CR>")
-            -- vim.keymap.set("n", "<leader>sdi", ":Stashdown ii<CR>")
         end,
         keys = {
             {
@@ -175,8 +171,32 @@ require("lazy").setup({
                 "<leader>sdi",
                 "<cmd>:Stashdown ii<CR>",
                 mode = { "n" },
-                desc = "Insert an image into the current note file. Move the image into a folder associated with this note.",
+                desc =
+                "Insert an image into the current note file. Move the image into a folder associated with this note.",
             },
         },
-    }
+        ft = { "markdown" },
+    },
+    {
+        "rest-nvim/rest.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            opts = function(_, opts)
+                opts.ensure_installed = opts.ensure_installed or {}
+                table.insert(opts.ensure_installed, "http")
+            end,
+        },
+        keys = {
+            {
+                "<leader>rr",
+                "<cmd>:Rest run<CR>",
+                mode = { "n" },
+                desc = "Run the rest request under the cursor",
+            },
+        },
+        ft = { "http" },
+        enabled = function()
+            return jit.os == "Linux"
+        end,
+    },
 })
