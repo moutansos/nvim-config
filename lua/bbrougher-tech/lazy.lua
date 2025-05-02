@@ -61,4 +61,7 @@ require("lazy").setup({
     require("bbrougher-tech.plugins.blade-nav-nvim"),
     "stevearc/dressing.nvim",
     require("bbrougher-tech.plugins.stashdown-nvim"),
+    {
+        "tpope/vim-fugitive"
+    }
 })
