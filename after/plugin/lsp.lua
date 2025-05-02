@@ -14,7 +14,6 @@ local ensureInstalled = {
 require("mason-lspconfig").setup({
     ensure_installed = ensureInstalled,
     handlers = {
-        lsp.default_setup,
         lua_ls = function()
             local lua_opts = lsp.nvim_lua_ls()
             require("lspconfig").lua_ls.setup(lua_opts)
@@ -194,6 +193,26 @@ lspconfig.mojo.setup({
     cmd = { "mojo-lsp-server" },
     filetypes = { "mojo" },
 })
+
+lspconfig.lua_ls.setup {
+    settings = {
+        Lua = {
+            runtime = {
+                version = "LuaJIT",
+            },
+            diagnostics = {
+                globals = { "vim" },
+            },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
+            },
+            telemetry = {
+                enable = false,
+            }
+        }
+    }
+}
 
 lsp.setup()
 
