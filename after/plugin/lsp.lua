@@ -108,14 +108,14 @@ end)
 
 local lspconfig = require("lspconfig")
 
-lspconfig.snyk_ls.setup {
-    root_dir = lspconfig.util.root_pattern('.git'),
-    filetypes = { "go", "gomod","csharp", "javascript", "typescript", "json", "python", "requirements", "helm", "yaml", "terraform", "terraform-vars" },
-    init_options = {
-        activateSnykCode = "true"
-    },
-    single_file_support = true,
-}
+-- lspconfig.snyk_ls.setup {
+--     root_dir = lspconfig.util.root_pattern('.git'),
+--     filetypes = { "go", "gomod","csharp", "javascript", "typescript", "json", "python", "requirements", "helm", "yaml", "terraform", "terraform-vars" },
+--     init_options = {
+--         activateSnykCode = "true"
+--     },
+--     single_file_support = true,
+-- }
 
 lspconfig.denols.setup {
   -- on_attach = on_attach,
