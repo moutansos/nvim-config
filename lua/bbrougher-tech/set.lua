@@ -41,6 +41,7 @@ vim.opt.colorcolumn = "100"
 vim.g.mapleader = " "
 
 vim.wo.relativenumber = true
+vim.g.netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
 -- vim.opt.clipboard = "unnamedplus"
 if vim.fn.has("wsl") == 1 then
