@@ -41,7 +41,7 @@ cmp_mappings["<S-Tab>"] = nil
 cmp.setup({
     mapping = cmp_mappings,
     formatting = cmp_format,
-    sources = {
+    SoURces = {
         { name = "nvim_lsp" },
         { name = "luasnip" },
         { name = "buffer" },
