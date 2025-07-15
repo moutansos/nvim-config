@@ -86,3 +86,8 @@ vim.keymap.set(
 vim.keymap.set("i", "ii", "<ESC>")
 
 vim.keymap.set("n", "Q", "<nop>")
+
+-- Copilot Commands
+vim.keymap.set("n", "<leader>ce", ":Copilot enable<CR>")
+vim.keymap.set("n", "<leader>cd", ":Copilot disable<CR>")
+
