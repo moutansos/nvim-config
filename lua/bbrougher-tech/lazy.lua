@@ -48,11 +48,13 @@ require("lazy").setup({
         end,
     },
     require("bbrougher-tech.plugins.lualine"),
-    require("bbrougher-tech.plugins.lsp-zero"),
+
     "rafamadriz/friendly-snippets",
+    require("bbrougher-tech.plugins.luasnip"),
+    require("bbrougher-tech.plugins.lsp-zero"),
+
     require("bbrougher-tech.plugins.auto-save"),
     "numToStr/Comment.nvim",
-    require("bbrougher-tech.plugins.luasnip"),
     require("bbrougher-tech.plugins.cloak"),
     require("bbrougher-tech.plugins.nvim-comment"),
     "fabridamicelli/cronex.nvim",
@@ -61,8 +63,6 @@ require("lazy").setup({
     require("bbrougher-tech.plugins.blade-nav-nvim"),
     "stevearc/dressing.nvim",
     require("bbrougher-tech.plugins.stashdown-nvim"),
-    {
-        "tpope/vim-fugitive",
-    },
+    "tpope/vim-fugitive",
     "github/copilot.vim",
 })

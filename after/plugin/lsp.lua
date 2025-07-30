@@ -1,70 +1,7 @@
-vim.g.mapleader = " "
+local lspconfig = require("lspconfig")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local lsp = require("lsp-zero")
-
-lsp.preset("recommended")
-
-local ensureInstalled = {
-    "rust_analyzer",
-    "yamlls",
-    "jsonls",
-}
-
--- lsp.ensure_installed(ensureInstalled) -- Deprecated since 2.x
-require("mason-lspconfig").setup({
-    ensure_installed = ensureInstalled,
-    handlers = {
-        lua_ls = function()
-            local lua_opts = lsp.nvim_lua_ls()
-            require("lspconfig").lua_ls.setup(lua_opts)
-        end,
-    },
-})
-
-local cmp = require("cmp")
-local cmp_format = require("lsp-zero").cmp_format()
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-    ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-    ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-    ["<C-Space>"] = cmp.mapping.complete(),
-})
-
-cmp_mappings["<Tab>"] = nil
-cmp_mappings["<S-Tab>"] = nil
-
--- lsp.setup_nvim_cmp({
--- 	mapping = cmp_mappings,
--- })
-
-cmp.setup({
-    mapping = cmp_mappings,
-    formatting = cmp_format,
-    SoURces = {
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-        { name = "buffer" },
-        { name = "path" },
-    },
-    snippet = {
-        expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-        end,
-    },
-})
-
-lsp.set_preferences({
-    suggest_lsp_servers = false,
-    sign_icons = {
-        error = "?",
-        warn = "?",
-        hint = "H",
-        info = "?",
-    },
-})
-
-lsp.on_attach(function(client, bufnr)
+local on_attach = function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
 
     vim.keymap.set("n", "gd", function()
@@ -104,51 +41,71 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("i", "<C-h>", function()
         vim.lsp.buf.signature_help()
     end, opts)
-end)
+end
 
-local lspconfig = require("lspconfig")
-
--- lspconfig.snyk_ls.setup {
---     root_dir = lspconfig.util.root_pattern('.git'),
---     filetypes = { "go", "gomod","csharp", "javascript", "typescript", "json", "python", "requirements", "helm", "yaml", "terraform", "terraform-vars" },
---     init_options = {
---         activateSnykCode = "true"
---     },
---     single_file_support = true,
+-- lspconfig.denols.setup {
+--   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
 -- }
 
-lspconfig.denols.setup {
-  -- on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+vim.lsp.config['ts_ls'] = {
+    cmd = { "typescript-language-server", "--stdio" },
+    capabilities = capabilities,
+    init_options = {
+        hostInfo = "neovim",
+    },
+    on_attach = on_attach,
+    root_pattern = { "package.json", "tsconfig.json" },
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
 }
 
-lspconfig.ts_ls.setup {
-  -- on_attach = on_attach,
-  root_dir = lspconfig.util.root_pattern("package.json"),
-  single_file_support = false
-}
 
-lspconfig.csharp_ls.setup({
-    root_dir = function(startpath)
-        return lspconfig.util.root_pattern("*.sln")(startpath)
-            or lspconfig.util.root_pattern("*.csproj")(startpath)
-            or lspconfig.util.root_pattern(".git")(startpath)
-    end,
-    -- handlers = {
-    --     ["textDocument/definition"] = require('csharpls_extended').handler,
-    --     ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
-    -- },
+
+-- lspconfig.csharp_ls.setup({
+--     root_dir = function(startpath)
+--         return lspconfig.util.root_pattern("*.sln")(startpath)
+--             or lspconfig.util.root_pattern("*.csproj")(startpath)
+--             or lspconfig.util.root_pattern(".git")(startpath)
+--     end,
+--     -- handlers = {
+--     --     ["textDocument/definition"] = require('csharpls_extended').handler,
+--     --     ["textDocument/typeDefinition"] = require('csharpls_extended').handler,
+--     -- },
+-- })
+
+vim.lsp.config('lua_ls', {
+    cmd = { "lua-language-server" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+    init_options = {
+        hostInfo = "neovim",
+        settings = {
+            Lua = {
+                runtime = {
+                    version = "LuaJIT",
+                },
+                diagnostics = {
+                    globals = { "vim" },
+                },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("", true),
+                    checkThirdParty = false,
+                },
+                telemetry = {
+                    enable = false,
+                },
+            },
+        },
+    },
+    filetypes = { "lua" },
 })
 
-lspconfig.htmx.setup({
-    filetypes = { "html" },
-})
-
-lspconfig.yamlls.setup({
-    settings = {
+vim.lsp.config('yamlls', {
+    cmd = { "yaml-language-server", "--stdio" },
+    capabilities = capabilities,
+    on_attach = on_attach,
+    init_options = {
         yaml = {
             schemas = {
-                kubernetes = "kube.*.{yaml,yml}",
                 ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
                 ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
                 ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
@@ -159,44 +116,22 @@ lspconfig.yamlls.setup({
                 ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
                 ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
                 ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] =
-                "*api*.{yml,yaml}",
+                    "*api*.{yml,yaml}",
                 ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
-                "*docker-compose*.{yml,yaml}",
+                    "*docker-compose*.{yml,yaml}",
                 ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] =
-                "*flow*.{yml,yaml}",
+                    "*flow*.{yml,yaml}",
             },
         },
     },
 })
 
-lspconfig.jsonls.setup({})
-
-lspconfig.mojo.setup({
-    cmd = { "mojo-lsp-server" },
-    filetypes = { "mojo" },
-})
-
-lspconfig.lua_ls.setup {
-    settings = {
-        Lua = {
-            runtime = {
-                version = "LuaJIT",
-            },
-            diagnostics = {
-                globals = { "vim" },
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-                checkThirdParty = false,
-            },
-            telemetry = {
-                enable = false,
-            }
-        }
-    }
-}
-
-lsp.setup()
+vim.lsp.enable('ts_ls')
+vim.lsp.enable('csharp_ls')
+vim.lsp.enable('htmx_ls')
+vim.lsp.enable('jsonls')
+vim.lsp.enable('yamlls')
+vim.lsp.enable('lua_ls')
 
 vim.diagnostic.config({
     virtual_text = true,
