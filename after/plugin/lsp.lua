@@ -128,10 +128,11 @@ vim.lsp.config('yamlls', {
 
 vim.lsp.enable('ts_ls')
 vim.lsp.enable('csharp_ls')
-vim.lsp.enable('htmx_ls')
+vim.lsp.enable('htmx')
 vim.lsp.enable('jsonls')
 vim.lsp.enable('yamlls')
 vim.lsp.enable('lua_ls')
+vim.lsp.enable('gopls')
 
 vim.diagnostic.config({
     virtual_text = true,
