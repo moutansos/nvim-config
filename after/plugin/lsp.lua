@@ -126,7 +126,11 @@ vim.lsp.config('yamlls', {
     },
 })
 
-vim.lsp.enable('ts_ls')
+vim.lsp.config("gopls", {
+    on_attach = on_attach,
+})
+
+Vim.lsp.enable('ts_ls')
 vim.lsp.enable('csharp_ls')
 vim.lsp.enable('htmx')
 vim.lsp.enable('jsonls')
