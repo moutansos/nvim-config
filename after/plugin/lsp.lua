@@ -125,35 +125,45 @@ vim.lsp.config("gopls", {
     capabilities = capabilities,
 })
 
-local vue_language_server_path = vim.fn.expand '$MASON/packages' .. '/vue-language-server' .. '/node_modules/@vue/language-server'
+local vue_language_server_path = vim.fn.expand("$MASON/packages")
+    .. "/vue-language-server"
+    .. "/node_modules/@vue/language-server"
 local vue_plugin = {
-  name = '@vue/typescript-plugin',
-  location = vue_language_server_path,
-  languages = { 'vue' },
-  configNamespace = 'typescript',
+    name = "@vue/typescript-plugin",
+    location = vue_language_server_path,
+    languages = { "vue" },
+    configNamespace = "typescript",
 }
 local vtsls_config = {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    vtsls = {
-      tsserver = {
-        globalPlugins = {
-          vue_plugin,
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        vtsls = {
+            tsserver = {
+                globalPlugins = {
+                    vue_plugin,
+                },
+            },
         },
-      },
     },
-  },
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
 }
 
 local vue_ls_config = {
-  on_attach = on_attach,
-  capabilities = capabilities,
+    on_attach = on_attach,
+    capabilities = capabilities,
 }
 
-vim.lsp.config('vtsls', vtsls_config)
-vim.lsp.config('vue_ls', vue_ls_config)
+vim.lsp.config("vtsls", vtsls_config)
+vim.lsp.config("vue_ls", vue_ls_config)
+
+vim.lsp.config("gotempl", {
+    cmd = { "templ", "lsp" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "templ" },
+    root_markers = { "go.work", "go.mod", ".git" },
+})
 
 -- vim.lsp.enable("ts_ls")
 vim.lsp.enable("csharp_ls")
@@ -162,8 +172,9 @@ vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("gopls")
+vim.lsp.enable("gotempl")
 
-vim.lsp.enable({'vtsls', 'vue_ls'})
+vim.lsp.enable({ "vtsls", "vue_ls" })
 
 vim.diagnostic.config({
     virtual_text = true,
