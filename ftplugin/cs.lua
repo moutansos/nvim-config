@@ -196,3 +196,5 @@ vim.keymap.set("n", "<leader>gmf", function()
     vim.api.nvim_win_set_cursor(0, { row + 2, column })
     vim.api.nvim_feedkeys("A", "n", false)
 end)
+
+vim.keymap.set("n", "<leader>lsr", ":LspRestart csharp_ls<CR>", { noremap = true, silent = true })

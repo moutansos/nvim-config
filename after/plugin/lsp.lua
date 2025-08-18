@@ -165,6 +165,29 @@ vim.lsp.config("gotempl", {
     root_markers = { "go.work", "go.mod", ".git" },
 })
 
+vim.lsp.config("csharp_ls", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+vim.lsp.config("docker_language_server", {
+    cmd = { "docker-langserver", "start", "--stdio" },
+    filetypes = { "dockerfile", "yaml.docker-compose" },
+    root_markers = {
+        "Dockerfile",
+        "docker-compose.yaml",
+        "docker-compose.yml",
+        "compose.yaml",
+        "compose.yml",
+        "docker-bake.json",
+        "docker-bake.hcl",
+        "docker-bake.override.json",
+        "docker-bake.override.hcl",
+    },
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
 -- vim.lsp.enable("ts_ls")
 vim.lsp.enable("csharp_ls")
 vim.lsp.enable("htmx")
@@ -173,6 +196,7 @@ vim.lsp.enable("yamlls")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("gotempl")
+vim.lsp.enable("docker_language_server")
 
 vim.lsp.enable({ "vtsls", "vue_ls" })
 
