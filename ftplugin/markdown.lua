@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>smt", function()
+vim.keymap.set("n", "<leader>x", function()
     local line = vim.api.nvim_get_current_line()
     if (line:find("%[%s%]") ~= nil) then
         --replace with checked markdown
