@@ -65,4 +65,5 @@ require("lazy").setup({
     require("bbrougher-tech.plugins.stashdown-nvim"),
     "tpope/vim-fugitive",
     "github/copilot.vim",
+    require("bbrougher-tech.plugins.noice"),
 })
