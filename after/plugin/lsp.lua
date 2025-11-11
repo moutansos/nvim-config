@@ -170,7 +170,6 @@ vim.lsp.config("csharp_ls", {
         require("telescope").load_extension("csharpls_definition")
 
         vim.keymap.set("n", "gd", function()
-            print("The right jump to definition is disabled for csharp_ls.")
             vim.cmd("Telescope csharpls_definition")
         end, opts)
     end,
