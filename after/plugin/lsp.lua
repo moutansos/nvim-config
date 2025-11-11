@@ -168,6 +168,7 @@ vim.lsp.config("gotempl", {
 vim.lsp.config("csharp_ls", {
     on_attach = on_attach,
     capabilities = capabilities,
+    init_options = {},
 })
 
 vim.lsp.config("docker_language_server", {
@@ -202,4 +203,17 @@ vim.lsp.enable({ "vtsls", "vue_ls" })
 
 vim.diagnostic.config({
     virtual_text = true,
+})
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    -- Check if there's an attached LSP client for the current buffer
+    local clients = vim.lsp.get_active_clients({ bufnr = 0 }) -- 0 for current buffer
+    if #clients > 0 then
+      -- Request diagnostics for the current buffer
+      if vim.lsp.buf.publish_diagnostics then
+          vim.lsp.buf.publish_diagnostics()
+      end
+    end
+  end,
 })
