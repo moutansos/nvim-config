@@ -68,6 +68,6 @@ require("lazy").setup({
     require("bbrougher-tech.plugins.noice"),
     {
         "Decodetalkers/csharpls-extended-lsp.nvim",
-        ft = { "cs", "csharp" },
+        -- ft = { "cs", "csharp" },
     }
 })

@@ -33,6 +33,11 @@ local telescopeConfig = {
                 require("telescope.builtin").help_tags()
             end,
         },
+        {
+            "<leader>csd",
+            function()
+            end
+        }
     },
     config = function()
         require("telescope").setup({
@@ -42,6 +47,7 @@ local telescopeConfig = {
                 },
             },
         })
+
     end,
 }
 

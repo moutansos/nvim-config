@@ -5,8 +5,9 @@ local on_attach = function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
 
     vim.keymap.set("n", "gd", function()
-        vim.lsp.buf.definition()
+        require("telescope.builtin").lsp_definitions()
     end, opts)
+    vim.keymap.set("n", "<leader>vds", require("telescope.builtin").lsp_document_symbols, opts)
     vim.keymap.set("n", "<leader>gdd", function()
         vim.cmd(":belowright split")
         vim.lsp.buf.definition()
@@ -20,6 +21,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>vd", function()
         vim.diagnostic.open_float()
     end, opts)
+    vim.keymap.set("n", "<leader>vi", require("telescope.builtin").lsp_implementations, opts)
     vim.keymap.set("n", "[d", function()
         vim.diagnostic.goto_next()
     end, opts)
@@ -27,9 +29,6 @@ local on_attach = function(client, bufnr)
         vim.diagnostic.goto_prev()
     end, opts)
     vim.keymap.set("n", "<leader>vca", function()
-        vim.lsp.buf.code_action()
-    end, opts)
-    vim.keymap.set("n", "<C-.>", function()
         vim.lsp.buf.code_action()
     end, opts)
     vim.keymap.set("n", "<leader>vrr", function()
@@ -168,8 +167,15 @@ vim.lsp.config("gotempl", {
 vim.lsp.config("csharp_ls", {
     on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        -- Additional keybindings or settings specific to csharp_ls can be added here
+        local opts = { buffer = bufnr, remap = false }
+
         require("csharpls_extended").buf_read_cmd_bind()
+        require("telescope").load_extension("csharpls_definition")
+
+        vim.keymap.set("n", "gd", function()
+            print("The right jump to definition is disabled for csharp_ls.")
+            vim.cmd("Telescope csharpls_definition")
+        end, opts)
     end,
     capabilities = capabilities,
     init_options = {},
@@ -212,7 +218,7 @@ vim.diagnostic.config({
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
     -- Check if there's an attached LSP client for the current buffer
-    local clients = vim.lsp.get_active_clients({ bufnr = 0 }) -- 0 for current buffer
+    local clients = vim.lsp.get_clients({ bufnr = 0 }) -- 0 for current buffer
     if #clients > 0 then
       -- Request diagnostics for the current buffer
       if vim.lsp.buf.publish_diagnostics then
