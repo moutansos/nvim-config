@@ -166,7 +166,11 @@ vim.lsp.config("gotempl", {
 })
 
 vim.lsp.config("csharp_ls", {
-    on_attach = on_attach,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        -- Additional keybindings or settings specific to csharp_ls can be added here
+        require("csharpls_extended").buf_read_cmd_bind()
+    end,
     capabilities = capabilities,
     init_options = {},
 })

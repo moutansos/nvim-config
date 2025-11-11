@@ -66,4 +66,8 @@ require("lazy").setup({
     "tpope/vim-fugitive",
     "github/copilot.vim",
     require("bbrougher-tech.plugins.noice"),
+    {
+        "Decodetalkers/csharpls-extended-lsp.nvim",
+        ft = { "cs", "csharp" },
+    }
 })
