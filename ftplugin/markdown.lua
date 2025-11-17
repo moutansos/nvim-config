@@ -12,3 +12,11 @@ vim.keymap.set("n", "<leader>x", function()
         vim.api.nvim_set_current_line(replacedString)
     end
 end)
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+    pattern = "*.md",
+    callback = function()
+        vim.fn.matchadd("Todo", "TODO")
+        vim.fn.matchadd("Error", "BUG")
+    end,
+})
