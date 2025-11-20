@@ -9,7 +9,6 @@ vim.keymap.set("n", "<leader>f", function()
         timeout_ms = 2000,
     })
 end)
-vim.keymap.set("n", "<leader>u", ":UndotreeToggle<CR>")
 vim.keymap.set("n", "<leader>e", function()
     vim.diagnostic.open_float({ scope = "line", source = true })
 end)

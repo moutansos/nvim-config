@@ -9,6 +9,8 @@
     ],
     "workspace.checkThirdParty": false,
     "workspace.library": [
-        "$VIMRUNTIME"
+        "$VIMRUNTIME",
+        "${3rd}/luv/library",
+        "${3rd}/luassert/library"
     ]
 }

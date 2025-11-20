@@ -1,9 +1,9 @@
 return {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    lazy = false,
-    config = function()
-        require("nvim-treesitter.configs").setup({
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        lazy = false,
+        opts = {
             -- A list of parser names, or "all" (the five listed parsers should always be installed)
             ensure_installed = {
                 "javascript",
@@ -36,21 +36,10 @@ return {
                 -- Instead of true it can also be a list of languages
                 additional_vim_regex_highlighting = false,
             },
-        })
-
-        local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-
-        parser_config.blade = {
-            install_info = {
-                url = "https://github.com/EmranMR/tree-sitter-blade",
-                files = { "src/parser.c" },
-                branch = "main",
-            },
-            filetype = "blade",
-        }
-    
-        require("treesitter-context").setup({
-            enable = true,
-        })
-    end,
+        },
+        config = function()
+            require("nvim-treesitter.parsers").get_parser_configs()
+        end,
+    },
+    { "nvim-treesitter/nvim-treesitter-context", options = { enable = true } },
 }

@@ -16,7 +16,8 @@ return {
         },
     },
     ft = { "http" },
-    enabled = function()
-        return jit.os == "Linux"
-    end,
+    enabled = false,
+    -- enabled = function()
+    --     return jit.os == "Linux"
+    -- end,
 }
