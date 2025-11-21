@@ -1,10 +1,11 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        branch = "master",
         build = ":TSUpdate",
         lazy = false,
+        main = "nvim-treesitter.configs",
         opts = {
-            -- A list of parser names, or "all" (the five listed parsers should always be installed)
             ensure_installed = {
                 "javascript",
                 "typescript",
@@ -16,17 +17,8 @@ return {
                 "markdown",
                 "markdown_inline",
             },
-
-            -- Install parsers synchronously (only applied to `ensure_installed`)
             sync_install = false,
-
-            -- Automatically install missing parsers when entering buffer
-            -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
             auto_install = true,
-
-            ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-            -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
             highlight = {
                 enable = true,
 
@@ -37,9 +29,6 @@ return {
                 additional_vim_regex_highlighting = false,
             },
         },
-        config = function()
-            require("nvim-treesitter.parsers").get_parser_configs()
-        end,
     },
     { "nvim-treesitter/nvim-treesitter-context", options = { enable = true } },
 }
