@@ -23,3 +23,10 @@ vim.filetype.add({
         handlebars = "glimmer",
     },
 })
+
+vim.filetype.add({
+    extension = {
+        cs = "cs",
+        csx = "csx",
+    },
+})

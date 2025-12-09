@@ -175,6 +175,13 @@ vim.lsp.config("csharp_ls", {
     end,
     capabilities = capabilities,
     init_options = {},
+    filetypes = { "cs" },
+})
+
+vim.lsp.config("omnisharp", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "csx" },
 })
 
 vim.lsp.config("docker_language_server", {
@@ -204,6 +211,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("gotempl")
 vim.lsp.enable("docker_language_server")
+vim.lsp.enable("omnisharp")
 
 vim.lsp.enable({ "vtsls", "vue_ls" })
 

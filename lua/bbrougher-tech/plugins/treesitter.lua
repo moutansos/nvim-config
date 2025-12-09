@@ -1,3 +1,10 @@
+vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyDone",
+    callback = function()
+        vim.treesitter.language.register("c_sharp", "csx")
+    end,
+})
+
 return {
     {
         "nvim-treesitter/nvim-treesitter",
@@ -30,5 +37,4 @@ return {
             },
         },
     },
-    { "nvim-treesitter/nvim-treesitter-context", options = { enable = true } },
 }
