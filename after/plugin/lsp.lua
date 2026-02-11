@@ -202,6 +202,21 @@ vim.lsp.config("docker_language_server", {
     capabilities = capabilities,
 })
 
+vim.lsp.config("astro", {
+    filetypes = { "astro" },
+    root_markers = { "astro.config.mjs", "astro.config.cjs", "astro.config.ts", "package.json", ".git" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+vim.lsp.config("marksman", {
+    cmd = { "marksman", "server" },
+    filetypes = { "markdown" },
+    root_markers = { ".git" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("csharp_ls")
 vim.lsp.enable("htmx")
@@ -212,6 +227,8 @@ vim.lsp.enable("gopls")
 vim.lsp.enable("gotempl")
 vim.lsp.enable("docker_language_server")
 vim.lsp.enable("omnisharp")
+vim.lsp.enable("astro")
+vim.lsp.enable("marksman")
 
 vim.lsp.enable({ "vtsls", "vue_ls" })
 

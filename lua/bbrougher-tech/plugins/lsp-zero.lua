@@ -14,7 +14,12 @@ return {
             "mason-org/mason.nvim",
             opts = {},
         },
-        "neovim/nvim-lspconfig",
+        {
+            "neovim/nvim-lspconfig",
+            keys = {
+                { "<leader>lsr", "<cmd>LspRestart<cr>", desc = "Restart LSP" },
+            },
+        },
         {
             "hrsh7th/nvim-cmp",
             opts = function()
