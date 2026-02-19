@@ -43,6 +43,24 @@ vim.keymap.set("v", "<leader>x", function()
     end
 end)
 
+vim.keymap.set("n", "<leader>-", function()
+    local lineNum = vim.api.nvim_win_get_cursor(0)[1]
+    local line = vim.api.nvim_buf_get_lines(0, lineNum - 1, lineNum, false)[1]
+    if line:find("%[%s%]") ~= nil then
+        --replace with checked markdown
+        local replacedString = string.gsub(line, "%[%s%]", "[-]")
+        -- print("Replaced string at " .. line .. ": " .. replacedString)
+        vim.api.nvim_win_set_cursor(0, {lineNum, 0})
+        vim.api.nvim_set_current_line(replacedString)
+    elseif line:find("%[%-%]") ~= nil then
+        --replace with checked markdown
+        local replacedString = string.gsub(line, "%[%-%]", "[ ]")
+        -- print("Replaced string at " .. line .. ": " .. replacedString)
+        vim.api.nvim_win_set_cursor(0, {lineNum, 0})
+        vim.api.nvim_set_current_line(replacedString)
+    end
+end)
+
 local os_name = vim.loop.os_uname().sysname
 
 if os_name == "Windows_NT" then
