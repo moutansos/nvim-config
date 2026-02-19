@@ -3,13 +3,13 @@ local function replaceInLine(lineNum)
     if line:find("%[%s%]") ~= nil then
         --replace with checked markdown
         local replacedString = string.gsub(line, "%[%s%]", "[x]")
-        print("Replaced string at " .. line .. ": " .. replacedString)
+        -- print("Replaced string at " .. line .. ": " .. replacedString)
         vim.api.nvim_win_set_cursor(0, {lineNum, 0})
         vim.api.nvim_set_current_line(replacedString)
     elseif line:find("%[x%]") ~= nil then
         --replace with unchecked markdown
         local replacedString = string.gsub(line, "%[x%]", "[ ]")
-        print("Replaced string at " .. line .. ": " .. replacedString)
+        -- print("Replaced string at " .. line .. ": " .. replacedString)
         vim.api.nvim_win_set_cursor(0, {lineNum, 0})
         vim.api.nvim_set_current_line(replacedString)
     end
@@ -28,8 +28,8 @@ vim.keymap.set("v", "<leader>x", function()
         line_start, line_end = line_end, line_start
     end
 
-    print("Line start: " .. line_start)
-    print("Line end: " .. line_end)
+    -- print("Line start: " .. line_start)
+    -- print("Line end: " .. line_end)
 
     for _, lineNum in ipairs(vim.fn.range(line_start, line_end)) do
         replaceInLine(lineNum)
