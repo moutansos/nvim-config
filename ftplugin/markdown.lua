@@ -1,22 +1,30 @@
-local function replaceInLine(lineNum)
+local function replaceInLine(lineNum, primaryChar, overrideChar)
     local cursorCol = vim.api.nvim_win_get_cursor(0)[2]
     local line = vim.api.nvim_buf_get_lines(0, lineNum - 1, lineNum, false)[1]
+
+    local cleanedPrimaryChar = primaryChar
+    if primaryChar == "-" then
+        cleanedPrimaryChar = "%-"
+    end
+
+    local cleanedOverrideChar = overrideChar
+    if overrideChar == "-" then
+        cleanedOverrideChar = "%-"
+    end
+
     if line:find("%[%s%]") ~= nil then
-        --replace with checked markdown
-        local replacedString = string.gsub(line, "%[%s%]", "[x]")
-        -- print("Replaced string at " .. line .. ": " .. replacedString)
+        -- print ("Found unchecked markdown at line " .. lineNum .. ": " .. line)
+        local replacedString = string.gsub(line, "%[%s%]", "[".. cleanedPrimaryChar .. "]")
         vim.api.nvim_win_set_cursor(0, {lineNum, cursorCol})
         vim.api.nvim_set_current_line(replacedString)
-    elseif line:find("%[%-%]") ~= nil then
-        --replace with checked markdown
-        local replacedString = string.gsub(line, "%[%-%]", "[x]")
-        -- print("Replaced string at " .. line .. ": " .. replacedString)
+    elseif line:find("%[" .. cleanedOverrideChar .. "%]") ~= nil then
+        -- print("Found checked override character markdown at line " .. lineNum .. ": " .. line)
+        local replacedString = string.gsub(line, "%[" .. cleanedOverrideChar .. "%]", "[" .. primaryChar .. "]")
         vim.api.nvim_win_set_cursor(0, {lineNum, cursorCol})
         vim.api.nvim_set_current_line(replacedString)
-    elseif line:find("%[x%]") ~= nil then
-        --replace with unchecked markdown
-        local replacedString = string.gsub(line, "%[x%]", "[ ]")
-        -- print("Replaced string at " .. line .. ": " .. replacedString)
+    elseif line:find("%[" .. cleanedPrimaryChar .. "%]") ~= nil then
+        -- print("Found checked primary markdown at line " .. lineNum .. ": " .. line)
+        local replacedString = string.gsub(line, "%[" .. cleanedPrimaryChar .. "%]", "[ ]")
         vim.api.nvim_win_set_cursor(0, {lineNum, cursorCol})
         vim.api.nvim_set_current_line(replacedString)
     end
@@ -24,7 +32,7 @@ end
 
 vim.keymap.set("n", "<leader>x", function()
     local lineNum = vim.api.nvim_win_get_cursor(0)[1]
-    replaceInLine(lineNum)
+    replaceInLine(lineNum, "x", "-")
 end)
 
 vim.keymap.set("v", "<leader>x", function()
@@ -35,29 +43,26 @@ vim.keymap.set("v", "<leader>x", function()
         line_start, line_end = line_end, line_start
     end
 
-    -- print("Line start: " .. line_start)
-    -- print("Line end: " .. line_end)
-
     for _, lineNum in ipairs(vim.fn.range(line_start, line_end)) do
-        replaceInLine(lineNum)
+        replaceInLine(lineNum, "x", "-")
     end
 end)
 
 vim.keymap.set("n", "<leader>-", function()
     local lineNum = vim.api.nvim_win_get_cursor(0)[1]
-    local line = vim.api.nvim_buf_get_lines(0, lineNum - 1, lineNum, false)[1]
-    if line:find("%[%s%]") ~= nil then
-        --replace with checked markdown
-        local replacedString = string.gsub(line, "%[%s%]", "[-]")
-        -- print("Replaced string at " .. line .. ": " .. replacedString)
-        vim.api.nvim_win_set_cursor(0, {lineNum, 0})
-        vim.api.nvim_set_current_line(replacedString)
-    elseif line:find("%[%-%]") ~= nil then
-        --replace with checked markdown
-        local replacedString = string.gsub(line, "%[%-%]", "[ ]")
-        -- print("Replaced string at " .. line .. ": " .. replacedString)
-        vim.api.nvim_win_set_cursor(0, {lineNum, 0})
-        vim.api.nvim_set_current_line(replacedString)
+    replaceInLine(lineNum, "-", "x")
+end)
+
+vim.keymap.set("v", "<leader>-", function()
+    local line_start = vim.fn.line("v")
+    local line_end = vim.fn.line(".")
+
+    if line_start > line_end then
+        line_start, line_end = line_end, line_start
+    end
+
+    for _, lineNum in ipairs(vim.fn.range(line_start, line_end)) do
+        replaceInLine(lineNum, "-", "x")
     end
 end)
 
@@ -79,3 +84,5 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
         vim.fn.matchadd("Error", "BUG")
     end,
 })
+
+vim.keymap.set("n", "<leader>de", ":r ~/Downloads/ErrorDetails.txt<CR>")

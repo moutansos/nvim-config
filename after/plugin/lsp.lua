@@ -43,24 +43,24 @@ end
 --   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
 -- }
 
--- vim.lsp.config["ts_ls"] = {
---     cmd = { "typescript-language-server", "--stdio" },
---     capabilities = capabilities,
---     init_options = {
---         hostInfo = "neovim",
---         plugins = {
---             {
---                 name = "@vue/typescript-plugin",
---                 location = vim.fn.stdpath("data")
---                     .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
---                 languages = { "vue" },
---             },
---         },
---     },
---     on_attach = on_attach,
---     root_pattern = { "package.json", "tsconfig.json" },
---     filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact", "vue" },
--- }
+vim.lsp.config("ts_ls", {
+    cmd = { "typescript-language-server", "--stdio" },
+    capabilities = capabilities,
+    init_options = {
+        hostInfo = "neovim",
+        plugins = {
+            -- {
+            --     name = "@vue/typescript-plugin",
+            --     location = vim.fn.stdpath("data")
+            --         .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+            --     languages = { "vue" },
+            -- },
+        },
+    },
+    on_attach = on_attach,
+    root_pattern = { "package.json", "tsconfig.json" },
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact", "vue" },
+})
 
 vim.lsp.config("lua_ls", {
     cmd = { "lua-language-server" },
