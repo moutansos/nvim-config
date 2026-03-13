@@ -217,6 +217,15 @@ vim.lsp.config("marksman", {
     capabilities = capabilities,
 })
 
+vim.lsp.config("cobol_ls", {
+    cmd = { "cobol-language-support" },
+    filetypes = { "cobol", "cbl" },
+    root_markers = { "COPYBOOKS", ".git" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("csharp_ls")
 vim.lsp.enable("htmx")
@@ -229,6 +238,7 @@ vim.lsp.enable("docker_language_server")
 vim.lsp.enable("omnisharp")
 vim.lsp.enable("astro")
 vim.lsp.enable("marksman")
+vim.lsp.enable("cobol_ls")
 
 vim.lsp.enable({ "vtsls", "vue_ls" })
 
