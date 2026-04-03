@@ -24,6 +24,7 @@ return {
             "hrsh7th/nvim-cmp",
             opts = function()
                 local cmp = require("cmp")
+                local lspkind = require("lspkind")
                 return {
                     expand = function(args)
                         require("luasnip").lsp_expand(args.body)
@@ -54,6 +55,30 @@ return {
                         { name = "lazydev", group_index = 0 },
                         -- { name = "cmdline" },
                     },
+                    formatting = {
+                        fields = { "abbr", "icon", "kind", "menu" },
+                        format = lspkind.cmp_format({
+                            maxwidth = {
+                                menu = 50, -- leading text (labelDetails)
+                                abbr = 50, -- actual suggestion item
+                            },
+                            ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+                            show_labelDetails = true, -- show labelDetails in menu. Disabled by defaul
+                            -- The function below will be called before any actual modifications from lspkind
+                            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+                            before = function(entry, vim_item)
+                                return vim_item
+                            end,
+                            menu = {
+                                nvim_lsp = "[LSP]",
+                                path = "[Path]",
+                                buffer = "[Buffer]",
+                                luasnip = "[LuaSnip]",
+                                lazydev = "[LazyDev]",
+                                cmdline = "[CmdLine]",
+                            }
+                        }),
+                    },
                 }
             end,
             dependencies = {
@@ -62,6 +87,7 @@ return {
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-cmdline",
                 "L3MON4D3/LuaSnip",
+                "onsails/lspkind.nvim",
             },
         },
     },

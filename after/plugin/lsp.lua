@@ -174,14 +174,16 @@ vim.lsp.config("csharp_ls", {
         end, opts)
     end,
     capabilities = capabilities,
-    init_options = {},
+    -- init_options = {
+    --     AutomaticWorkspaceInit = true,
+    -- },
     filetypes = { "cs" },
 })
 
 vim.lsp.config("omnisharp", {
     on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = { "csx" },
+    filetypes = { "csx", "cs" },
 })
 
 vim.lsp.config("docker_language_server", {
