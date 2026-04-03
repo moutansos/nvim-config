@@ -1,4 +1,3 @@
-local lspconfig = require("lspconfig")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 local on_attach = function(client, bufnr)
@@ -119,6 +118,10 @@ vim.lsp.config("yamlls", {
 vim.lsp.config("gopls", {
     on_attach = on_attach,
     capabilities = capabilities,
+    cmd = { "gopls" },
+    cmd_env = {
+        GOTOOLCHAIN = "auto",
+    },
 })
 
 local vue_language_server_path = vim.fn.expand("$MASON/packages")
@@ -227,7 +230,6 @@ vim.lsp.config("cobol_ls", {
     capabilities = capabilities,
 })
 
-
 vim.lsp.enable("ts_ls")
 vim.lsp.enable("csharp_ls")
 vim.lsp.enable("htmx")
@@ -248,15 +250,15 @@ vim.diagnostic.config({
     virtual_text = true,
 })
 
-vim.api.nvim_create_autocmd('BufEnter', {
-  callback = function()
-    -- Check if there's an attached LSP client for the current buffer
-    local clients = vim.lsp.get_clients({ bufnr = 0 }) -- 0 for current buffer
-    if #clients > 0 then
-      -- Request diagnostics for the current buffer
-      if vim.lsp.buf.publish_diagnostics then
-          vim.lsp.buf.publish_diagnostics()
-      end
-    end
-  end,
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function()
+        -- Check if there's an attached LSP client for the current buffer
+        local clients = vim.lsp.get_clients({ bufnr = 0 }) -- 0 for current buffer
+        if #clients > 0 then
+            -- Request diagnostics for the current buffer
+            if vim.lsp.buf.publish_diagnostics then
+                vim.lsp.buf.publish_diagnostics()
+            end
+        end
+    end,
 })
