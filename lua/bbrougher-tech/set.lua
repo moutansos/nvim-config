@@ -66,3 +66,10 @@ vim.keymap.set("n", "<leader>sfn", function()
     local filename = name:match("^.+[/\\](.*)$"):gsub("%..+$", "")
     vim.api.nvim_put({ filename }, "", true, true)
 end)
+
+-- Folding
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
