@@ -145,7 +145,7 @@ local vtsls_config = {
             },
         },
     },
-    filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact", "vue" },
 }
 
 local vue_ls_config = {
@@ -230,7 +230,6 @@ vim.lsp.config("cobol_ls", {
     capabilities = capabilities,
 })
 
-vim.lsp.enable("ts_ls")
 vim.lsp.enable("csharp_ls")
 vim.lsp.enable("htmx")
 vim.lsp.enable("jsonls")
@@ -243,8 +242,9 @@ vim.lsp.enable("omnisharp")
 vim.lsp.enable("astro")
 vim.lsp.enable("marksman")
 vim.lsp.enable("cobol_ls")
+vim.lsp.enable("vtsls")
+vim.lsp.enable("vue_ls")
 
-vim.lsp.enable({ "vtsls", "vue_ls" })
 
 vim.diagnostic.config({
     virtual_text = true,
