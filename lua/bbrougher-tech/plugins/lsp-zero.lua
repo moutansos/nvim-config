@@ -6,6 +6,7 @@ return {
             "yamlls",
             "jsonls",
             "lua_ls",
+            "vtsls"
         },
         automatic_enable = true,
     },

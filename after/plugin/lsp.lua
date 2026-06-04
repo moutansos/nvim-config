@@ -4,7 +4,9 @@ local on_attach = function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
 
     vim.keymap.set("n", "gd", function()
-        require("telescope.builtin").lsp_definitions()
+        require("telescope.builtin").lsp_definitions({
+            file_ignore_patterns = {},
+        })
     end, opts)
     vim.keymap.set("n", "<leader>gdd", function()
         vim.cmd(":belowright split")
