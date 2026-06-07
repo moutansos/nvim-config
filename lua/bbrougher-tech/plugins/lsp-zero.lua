@@ -13,7 +13,12 @@ return {
     dependencies = {
         {
             "mason-org/mason.nvim",
-            opts = {},
+            opts = {
+                registries = {
+                    "github:mason-org/mason-registry",
+                    "github:Crashdummyy/mason-registry",
+                },
+            },
         },
         {
             "neovim/nvim-lspconfig",
@@ -77,7 +82,7 @@ return {
                                 luasnip = "[LuaSnip]",
                                 lazydev = "[LazyDev]",
                                 cmdline = "[CmdLine]",
-                            }
+                            },
                         }),
                     },
                 }

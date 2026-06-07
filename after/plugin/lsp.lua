@@ -232,7 +232,23 @@ vim.lsp.config("cobol_ls", {
     capabilities = capabilities,
 })
 
-vim.lsp.enable("csharp_ls")
+vim.lsp.config("roslyn", {
+    on_attach = on_attach,
+    settings = {
+        ["csharp|inlay_hints"] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+        },
+        ["csharp|code_lens"] = {
+            dotnet_enable_references_code_lens = true,
+        },
+    },
+})
+
+vim.lsp.enable("ts_ls")
+-- vim.lsp.enable("csharp_ls")
+vim.lsp.enable("roslyn")
+>>>>>>> bf188fe (feat: switch to roslyn nvim)
 vim.lsp.enable("htmx")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
@@ -240,13 +256,12 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("gotempl")
 vim.lsp.enable("docker_language_server")
-vim.lsp.enable("omnisharp")
+-- vim.lsp.enable("omnisharp")
 vim.lsp.enable("astro")
 vim.lsp.enable("marksman")
 vim.lsp.enable("cobol_ls")
 vim.lsp.enable("vtsls")
 vim.lsp.enable("vue_ls")
-
 
 vim.diagnostic.config({
     virtual_text = true,
