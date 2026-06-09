@@ -248,7 +248,6 @@ vim.lsp.config("roslyn", {
 vim.lsp.enable("ts_ls")
 -- vim.lsp.enable("csharp_ls")
 vim.lsp.enable("roslyn")
->>>>>>> bf188fe (feat: switch to roslyn nvim)
 vim.lsp.enable("htmx")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
