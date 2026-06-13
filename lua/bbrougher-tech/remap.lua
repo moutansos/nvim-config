@@ -1,11 +1,52 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "-", vim.cmd.Ex)
+
+local formatter_precedence_by_filetype = {
+    javascript = { "null-ls" },
+    javascriptreact = { "null-ls" },
+    typescript = { "null-ls" },
+    typescriptreact = { "null-ls" },
+    vue = { "null-ls" },
+    css = { "null-ls" },
+    scss = { "null-ls" },
+    less = { "null-ls" },
+    html = { "null-ls" },
+    json = { "null-ls" },
+    jsonc = { "null-ls" },
+    yaml = { "null-ls" },
+    markdown = { "null-ls" },
+    ["markdown.mdx"] = { "null-ls" },
+    graphql = { "null-ls" },
+    handlebars = { "null-ls" },
+    xml = { "null-ls" },
+}
+
+local function formatter_filter_for_filetype(filetype)
+    local preferred_clients = formatter_precedence_by_filetype[filetype]
+    if not preferred_clients then
+        return nil
+    end
+
+    local attached_clients = vim.lsp.get_clients({ bufnr = 0 })
+    for _, preferred_client in ipairs(preferred_clients) do
+        for _, client in ipairs(attached_clients) do
+            if client.name == preferred_client then
+                return function(format_client)
+                    return format_client.name == preferred_client
+                end
+            end
+        end
+    end
+
+    return nil
+end
+
 vim.keymap.set("n", "<leader>f", function()
+    local filter = formatter_filter_for_filetype(vim.bo.filetype)
+
     vim.lsp.buf.format({
-        filter = function(client)
-            return client.name ~= "tsserver"
-        end,
+        filter = filter,
         timeout_ms = 2000,
     })
 end)

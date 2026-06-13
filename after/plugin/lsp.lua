@@ -112,6 +112,7 @@ vim.lsp.config("yamlls", {
                 "*docker-compose*.{yml,yaml}",
                 ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] =
                 "*flow*.{yml,yaml}",
+                ["https://dev.azure.com/moutansos0695/_apis/distributedtask/yamlschema?api-version=7.1"] = "*azure-pipelines*.{yml,yaml}",
             },
         },
     },
@@ -235,17 +236,27 @@ vim.lsp.config("cobol_ls", {
 vim.lsp.config("roslyn", {
     on_attach = on_attach,
     settings = {
+        ["csharp|backgroundAnalysis"] = {
+            analysisScope = "fullSolution",
+            compilerDiagnosticsScope = "fullSolution",
+        },
         ["csharp|inlay_hints"] = {
             csharp_enable_inlay_hints_for_implicit_object_creation = true,
             csharp_enable_inlay_hints_for_implicit_variable_types = true,
         },
         ["csharp|code_lens"] = {
             dotnet_enable_references_code_lens = true,
+            dotnet_enable_tests_code_lens = true,
+        },
+        ["scharp|completion"] = {
+            dotnet_provide_regex_completion = true,
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_show_name_completion_suggestions = true,
         },
     },
 })
 
-vim.lsp.enable("ts_ls")
+-- vim.lsp.enable("ts_ls")
 -- vim.lsp.enable("csharp_ls")
 vim.lsp.enable("roslyn")
 vim.lsp.enable("htmx")

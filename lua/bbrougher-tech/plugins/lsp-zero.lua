@@ -23,7 +23,7 @@ return {
         {
             "neovim/nvim-lspconfig",
             keys = {
-                { "<leader>lsr", "<cmd>LspRestart<cr>", desc = "Restart LSP" },
+                { "<leader>lsr", "<cmd>lsp restart<cr>", desc = "Restart LSP" },
             },
         },
         {
