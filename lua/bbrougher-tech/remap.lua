@@ -115,19 +115,10 @@ vim.keymap.set("n", "C-[", "<esc>")
 vim.keymap.set("n", "<C-j>", ":cnext<CR>")
 vim.keymap.set("n", "<C-k>", ":cprev<CR>")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-vim.keymap.set(
-    "v",
-    "<C-c>",
-    "y:!echo <C-r>=escape(substitute(shellescape(getreg('\"')), '\\n', '\\r', 'g'), '#%!')<CR> <Bar> clip.exe<CR><CR>"
-)
-
-vim.keymap.set("i", "ii", "<ESC>")
-
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set("n", "Q", "<nop>")
 
 -- Copilot Commands
 vim.keymap.set("n", "<leader>ce", ":Copilot enable<CR>")
 vim.keymap.set("n", "<leader>cd", ":Copilot disable<CR>")
-

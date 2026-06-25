@@ -21,10 +21,10 @@ local on_attach = function(client, bufnr)
     end, opts)
     vim.keymap.set("n", "<leader>vi", require("telescope.builtin").lsp_implementations, opts)
     vim.keymap.set("n", "[d", function()
-        vim.diagnostic.goto_next()
+        vim.diagnostic.jump({ count = 1, float = true })
     end, opts)
     vim.keymap.set("n", "]d", function()
-        vim.diagnostic.goto_prev()
+        vim.diagnostic.jump({ count = -1, float = true })
     end, opts)
     vim.keymap.set("n", "<leader>vca", function()
         vim.lsp.buf.code_action()
@@ -38,6 +38,22 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("i", "<C-h>", function()
         vim.lsp.buf.signature_help()
     end, opts)
+end
+
+local function find_omnisharp_root(bufnr)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    return vim.fs.root(fname, "omnisharp.json")
+end
+
+local function find_csharp_root(bufnr)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    local root_marker = vim.fs.find(function(name)
+        return name:match("%.slnx?$") ~= nil or name:match("%.csproj$") ~= nil or name == ".git"
+    end, { path = vim.fs.dirname(fname), upward = true })[1]
+
+    if root_marker then
+        return vim.fs.dirname(root_marker)
+    end
 end
 
 -- lspconfig.denols.setup {
@@ -190,6 +206,13 @@ vim.lsp.config("omnisharp", {
     on_attach = on_attach,
     capabilities = capabilities,
     filetypes = { "csx", "cs" },
+    root_dir = function(bufnr, on_dir)
+        local root = find_omnisharp_root(bufnr)
+
+        if root then
+            on_dir(root)
+        end
+    end,
 })
 
 vim.lsp.config("docker_language_server", {
@@ -235,6 +258,17 @@ vim.lsp.config("cobol_ls", {
 
 vim.lsp.config("roslyn", {
     on_attach = on_attach,
+    root_dir = function(bufnr, on_dir)
+        if find_omnisharp_root(bufnr) then
+            return
+        end
+
+        local root = find_csharp_root(bufnr)
+
+        if root then
+            on_dir(root)
+        end
+    end,
     settings = {
         ["csharp|backgroundAnalysis"] = {
             analysisScope = "fullSolution",
@@ -266,7 +300,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("gotempl")
 vim.lsp.enable("docker_language_server")
--- vim.lsp.enable("omnisharp")
+vim.lsp.enable("omnisharp")
 vim.lsp.enable("astro")
 vim.lsp.enable("marksman")
 vim.lsp.enable("cobol_ls")
