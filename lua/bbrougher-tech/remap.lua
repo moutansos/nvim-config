@@ -85,6 +85,33 @@ vim.keymap.set("n", "<leader>wfn", function()
     vim.api.nvim_win_set_cursor(0, { row, col + currentFileName:len() + 1 })
 end)
 
+vim.keymap.set("n", "<leader>rn", function()
+    local old_path = vim.fn.expand("%:p")
+    if old_path == "" then
+        vim.notify("No file to rename", vim.log.levels.WARN)
+        return
+    end
+
+    vim.ui.input({ prompt = "Rename file: ", default = old_path, completion = "file" }, function(new_path)
+        if not new_path or new_path == "" or new_path == old_path then
+            return
+        end
+
+        new_path = vim.fn.fnamemodify(new_path, ":p")
+        vim.fn.mkdir(vim.fn.fnamemodify(new_path, ":h"), "p")
+
+        local ok, err = os.rename(old_path, new_path)
+        if not ok then
+            vim.notify("Rename failed: " .. tostring(err), vim.log.levels.ERROR)
+            return
+        end
+
+        local old_buf = vim.api.nvim_get_current_buf()
+        vim.cmd("edit " .. vim.fn.fnameescape(new_path))
+        vim.api.nvim_buf_delete(old_buf, { force = true })
+    end)
+end)
+
 vim.keymap.set("n", "<leader>df", function()
     local confirm = vim.fn.confirm("Delete buffer and file?", "&Yes\n&No", 2)
 
