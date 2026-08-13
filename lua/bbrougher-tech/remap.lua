@@ -122,6 +122,9 @@ vim.keymap.set("n", "<leader>df", function()
 end)
 
 vim.keymap.set("n", "<leader>sc", ":setlocal spell!<CR>")
+vim.keymap.set("n", "<leader>cf", function()
+    vim.cmd([[silent! %s/\r//g]])
+end, { desc = "Remove carriage returns" })
 
 vim.keymap.set("n", "<leader>sa", ":ASToggle<CR>")
 
