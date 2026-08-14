@@ -30,3 +30,9 @@ vim.filetype.add({
         csx = "csx",
     },
 })
+
+vim.filetype.add({
+    extension = {
+        al = "al",
+    },
+})

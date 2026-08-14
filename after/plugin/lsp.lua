@@ -204,7 +204,11 @@ vim.lsp.config("csharp_ls", {
 
 vim.lsp.config("omnisharp", {
     on_attach = on_attach,
-    capabilities = capabilities,
+    capabilities = vim.tbl_deep_extend("force", {}, capabilities, {
+        textDocument = {
+            semanticTokens = vim.NIL,
+        },
+    }),
     filetypes = { "csx", "cs" },
     root_dir = function(bufnr, on_dir)
         local root = find_omnisharp_root(bufnr)
