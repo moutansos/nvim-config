@@ -16,11 +16,11 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         branch = "main",
-        build = ":TSUpdate",
+        build = function()
+            require("nvim-treesitter").update():wait(300000)
+            require("nvim-treesitter").install({ "css" }):wait(300000)
+        end,
         lazy = false,
         main = "nvim-treesitter",
-        opts = {
-            install_dir = vim.fn.stdpath("data") .. "/site",
-        },
     },
 }

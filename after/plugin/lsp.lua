@@ -45,17 +45,6 @@ local function find_omnisharp_root(bufnr)
     return vim.fs.root(fname, "omnisharp.json")
 end
 
-local function find_csharp_root(bufnr)
-    local fname = vim.api.nvim_buf_get_name(bufnr)
-    local root_marker = vim.fs.find(function(name)
-        return name:match("%.slnx?$") ~= nil or name:match("%.csproj$") ~= nil or name == ".git"
-    end, { path = vim.fs.dirname(fname), upward = true })[1]
-
-    if root_marker then
-        return vim.fs.dirname(root_marker)
-    end
-end
-
 -- lspconfig.denols.setup {
 --   root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
 -- }
@@ -267,7 +256,14 @@ vim.lsp.config("roslyn", {
             return
         end
 
-        local root = find_csharp_root(bufnr)
+        -- Delegate to roslyn.nvim's own solution-aware root finder: it walks
+        -- upward collecting every .sln/.slnx/.slnf (not just the nearest
+        -- match), so a project's own .csproj doesn't shadow a solution file
+        -- higher up. Without this, a per-project root meant sibling
+        -- ProjectReferences weren't part of the loaded workspace, so
+        -- go-to-definition on their symbols fell back to decompiling the
+        -- built DLL instead of showing source.
+        local root = require("roslyn.sln.utils").root_dir(bufnr)
 
         if root then
             on_dir(root)
