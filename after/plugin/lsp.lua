@@ -117,12 +117,18 @@ vim.lsp.config("yamlls", {
     },
 })
 
+-- gopls forces GOTOOLCHAIN=local when it shells out to `go`, so auto-download
+-- of a newer toolchain is ignored. Point the process at a real Go 1.27
+-- toolchain and a gopls built with 1.27 (generic methods need both).
+local go127 = vim.fn.expand("~/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.0.linux-amd64")
 vim.lsp.config("gopls", {
     on_attach = on_attach,
     capabilities = capabilities,
-    cmd = { "gopls" },
+    cmd = { vim.fn.expand("~/go/bin/gopls") },
     cmd_env = {
-        GOTOOLCHAIN = "auto",
+        PATH = go127 .. "/bin:" .. (vim.env.PATH or ""),
+        GOROOT = go127,
+        GOTOOLCHAIN = "local",
     },
 })
 
