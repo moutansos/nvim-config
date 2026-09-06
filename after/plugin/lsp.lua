@@ -21,10 +21,10 @@ local on_attach = function(client, bufnr)
     end, opts)
     vim.keymap.set("n", "<leader>vi", require("telescope.builtin").lsp_implementations, opts)
     vim.keymap.set("n", "[d", function()
-        vim.diagnostic.goto_next()
+        vim.diagnostic.jump({ count = 1, float = true })
     end, opts)
     vim.keymap.set("n", "]d", function()
-        vim.diagnostic.goto_prev()
+        vim.diagnostic.jump({ count = -1, float = true })
     end, opts)
     vim.keymap.set("n", "<leader>vca", function()
         vim.lsp.buf.code_action()
@@ -38,6 +38,11 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("i", "<C-h>", function()
         vim.lsp.buf.signature_help()
     end, opts)
+end
+
+local function find_omnisharp_root(bufnr)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    return vim.fs.root(fname, "omnisharp.json")
 end
 
 -- lspconfig.denols.setup {
@@ -112,6 +117,7 @@ vim.lsp.config("yamlls", {
                 "*docker-compose*.{yml,yaml}",
                 ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] =
                 "*flow*.{yml,yaml}",
+                ["https://dev.azure.com/moutansos0695/_apis/distributedtask/yamlschema?api-version=7.1"] = "*azure-pipelines*.{yml,yaml}",
             },
         },
     },
@@ -193,8 +199,19 @@ vim.lsp.config("csharp_ls", {
 
 vim.lsp.config("omnisharp", {
     on_attach = on_attach,
-    capabilities = capabilities,
+    capabilities = vim.tbl_deep_extend("force", {}, capabilities, {
+        textDocument = {
+            semanticTokens = vim.NIL,
+        },
+    }),
     filetypes = { "csx", "cs" },
+    root_dir = function(bufnr, on_dir)
+        local root = find_omnisharp_root(bufnr)
+
+        if root then
+            on_dir(root)
+        end
+    end,
 })
 
 vim.lsp.config("docker_language_server", {
@@ -238,7 +255,50 @@ vim.lsp.config("cobol_ls", {
     capabilities = capabilities,
 })
 
-vim.lsp.enable("csharp_ls")
+vim.lsp.config("roslyn", {
+    on_attach = on_attach,
+    root_dir = function(bufnr, on_dir)
+        if find_omnisharp_root(bufnr) then
+            return
+        end
+
+        -- Delegate to roslyn.nvim's own solution-aware root finder: it walks
+        -- upward collecting every .sln/.slnx/.slnf (not just the nearest
+        -- match), so a project's own .csproj doesn't shadow a solution file
+        -- higher up. Without this, a per-project root meant sibling
+        -- ProjectReferences weren't part of the loaded workspace, so
+        -- go-to-definition on their symbols fell back to decompiling the
+        -- built DLL instead of showing source.
+        local root = require("roslyn.sln.utils").root_dir(bufnr)
+
+        if root then
+            on_dir(root)
+        end
+    end,
+    settings = {
+        ["csharp|backgroundAnalysis"] = {
+            analysisScope = "fullSolution",
+            compilerDiagnosticsScope = "fullSolution",
+        },
+        ["csharp|inlay_hints"] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+        },
+        ["csharp|code_lens"] = {
+            dotnet_enable_references_code_lens = true,
+            dotnet_enable_tests_code_lens = true,
+        },
+        ["scharp|completion"] = {
+            dotnet_provide_regex_completion = true,
+            dotnet_show_completion_items_from_unimported_namespaces = true,
+            dotnet_show_name_completion_suggestions = true,
+        },
+    },
+})
+
+-- vim.lsp.enable("ts_ls")
+-- vim.lsp.enable("csharp_ls")
+vim.lsp.enable("roslyn")
 vim.lsp.enable("htmx")
 vim.lsp.enable("jsonls")
 vim.lsp.enable("yamlls")
@@ -252,7 +312,6 @@ vim.lsp.enable("marksman")
 vim.lsp.enable("cobol_ls")
 vim.lsp.enable("vtsls")
 vim.lsp.enable("vue_ls")
-
 
 vim.diagnostic.config({
     virtual_text = true,

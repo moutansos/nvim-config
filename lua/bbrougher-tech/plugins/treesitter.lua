@@ -5,6 +5,13 @@ vim.api.nvim_create_autocmd("User", {
     end,
 })
 
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = { "*.razor", "*.cshtml" },
+    callback = function()
+        vim.bo.filetype = "razor"
+    end,
+})
+
 return {
     {
         "nvim-treesitter/nvim-treesitter",

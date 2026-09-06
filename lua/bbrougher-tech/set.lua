@@ -22,7 +22,7 @@ vim.opt.spell = false
 -- auto-reload files when modified externally
 -- https://unix.stackexchange.com/a/383044
 vim.o.autoread = true
-vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
     command = "if mode() != 'c' | checktime | endif",
     pattern = { "*" },
 })
@@ -34,9 +34,13 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
 
-vim.opt.updatetime = 50
+-- A 50 ms idle timer repeatedly ran CursorHold handlers while editing.
+vim.opt.updatetime = 500
 
 vim.opt.colorcolumn = "100"
+
+-- LSP server warnings can be extremely verbose and are written synchronously.
+vim.lsp.log.set_level("OFF")
 
 vim.g.mapleader = " "
 
