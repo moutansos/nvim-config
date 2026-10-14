@@ -48,6 +48,28 @@ vim.keymap.set("n", "<leader>gmc", function()
     vim.api.nvim_feedkeys("A", "n", false)
 end)
 
+vim.keymap.set("n", "<leader>gmi", function()
+    local namespace = getNamespaceForCurrentBuffer()
+    local name = getTypeNameFromCurrentFile()
+    local classTemplate = {
+        "namespace " .. namespace ..";",
+        "",
+        "public class " .. name,
+        "{",
+        "    ",
+        -- "",
+        -- "    public ".. name .. "()",
+        -- "    {",
+        -- "    }",
+        "}"
+    }
+
+    local row, column = unpack(vim.api.nvim_win_get_cursor(0))
+    vim.api.nvim_buf_set_lines(0, 0, 0, false, classTemplate)
+    vim.api.nvim_win_set_cursor(0, { row + 4, column })
+    vim.api.nvim_feedkeys("A", "n", false)
+end)
+
 vim.keymap.set("n", "<leader>gmn", function()
     local namespace = getNamespaceForCurrentBuffer()
     local classTemplate = {
