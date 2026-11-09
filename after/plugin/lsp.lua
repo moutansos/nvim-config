@@ -262,18 +262,16 @@ vim.lsp.config("roslyn", {
             return
         end
 
-        -- Delegate to roslyn.nvim's own solution-aware root finder: it walks
-        -- upward collecting every .sln/.slnx/.slnf (not just the nearest
-        -- match), so a project's own .csproj doesn't shadow a solution file
-        -- higher up. Without this, a per-project root meant sibling
-        -- ProjectReferences weren't part of the loaded workspace, so
-        -- go-to-definition on their symbols fell back to decompiling the
-        -- built DLL instead of showing source.
-        local root = require("roslyn.sln.utils").root_dir(bufnr)
-
-        if root then
-            on_dir(root)
-        end
+        -- Delegate to roslyn.nvim's own solution-aware target resolution so a
+        -- project's .csproj doesn't shadow a solution file higher up (otherwise
+        -- sibling ProjectReferences decompile instead of showing source).
+        -- remember() is required: the plugin's on_init consumes the decision
+        -- to open the solution/project.
+        local target = require("roslyn.target")
+        local decision = target.resolve(bufnr)
+        target.notify_if_needed(decision)
+        target.remember(decision)
+        on_dir(decision.root_dir)
     end,
     settings = {
         ["csharp|backgroundAnalysis"] = {
