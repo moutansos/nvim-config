@@ -310,6 +310,11 @@ vim.lsp.enable("marksman")
 vim.lsp.enable("cobol_ls")
 vim.lsp.enable("vtsls")
 vim.lsp.enable("vue_ls")
+-- fwcd/kotlin-language-server cannot import Android projects on Gradle 9:
+-- its injected kotlinLSPKotlinDSLDeps task captures a Project and fails the
+-- configuration cache, so androidx/android stay unresolved. The official
+-- JetBrains server (Mason package kotlin-lsp) understands AGP projects.
+vim.lsp.enable("kotlin_lsp")
 
 vim.diagnostic.config({
     virtual_text = true,

@@ -6,7 +6,8 @@ return {
             "yamlls",
             "jsonls",
             "lua_ls",
-            "vtsls"
+            "vtsls",
+            "kotlin-lsp",
         },
         automatic_enable = true,
     },
